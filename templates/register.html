@@ -13,7 +13,7 @@
             <a class="registerhere" href="{{ url_for('register')}}"><input type="submit" class="navsign" value="Sign Up"></a>
         </div>
     </div>
-    <div class="resgisterform"></div>
+    <div class="resgisterform">
         <form action="{{ url_for('register')}}" method="post" autocomplete="off">
             <div class="msg">{{ msg }}</div>
             <input type="text" name="username" placeholder="Enter Your Username" class="textbox" id="username" required>
