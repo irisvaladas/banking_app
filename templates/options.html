@@ -14,10 +14,16 @@
 <div class="two">
     <h1>Options:</h1>
     <ul>
-        <li><a href="{{url_for('index')}}">Index</a></li>
-        <li><a href="{{url_for('display')}}">Display</a></li>
+        <li><a href="??????">Bank Statement(Download)</a></li>
+        <li><a href="{{url_for('transactions')}}">View transactions</a></li>
+        <li>Perform Transactions
+            <ul>
+                <li><a href="{{url_for('withdraw')}}">withdraw</a></li>
+                <li><a href="{{url_for('deposit')}}">deposit</a></li>
+            </ul>
+        </li>
         <li><a href="{{url_for('update')}}">Update</a></li>
-        <li><a href="{{url_for('logout')}}">Log out</a></li>
+        <li><a href="{{url_for('delete')}}">Delete account</a></li>
     </ul>
 </div>
 </body>
