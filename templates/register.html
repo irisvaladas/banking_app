@@ -10,7 +10,7 @@
     <div class="navbar">
         <img src="">
         <div>
-            <a class="registerhere" href="{{ url_for('register')}}"><input type="submit" class="navsign" value="Sign Up"></a>
+            <a class="loginherebtn" href="{{ url_for('login')}}"><input type="submit" class="navlogin" value="Log in"></a>
         </div>
     </div>
     <div class="resgisterform">
@@ -26,7 +26,7 @@
             <input type="text" name="postalcode" placeholder="Enter Your Postal Code" class="textbox" id="postalcode" required>
             <input type="submit" class="btn" value="Register">
         </form>
-        <p class="loginpar">Already have an account? Log in <a class="loginhere" href="{{ url_for('register')}}">here</a></p>
+        <p class="loginpar">Already have an account? Log in <a class="loginhere" href="{{ url_for('login')}}">here</a></p>
     </div>
 </body>
 </html>
