@@ -7,6 +7,7 @@ def index():
     return render_template("index.html")
 
 
+
 @app.route('/customer_details/<customer_ref>')
 def get_customer_info(customer_ref):
     cust = Account(customer_ref)
