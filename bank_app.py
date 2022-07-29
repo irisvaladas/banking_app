@@ -6,10 +6,14 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
+@app.route("/login", methods=['GET','POST'])
+def login():
 
-@app.route('/customer_details/<customer_ref>')
-def get_customer_info(customer_ref):
-    cust = Account(customer_ref)
+
+
+@app.route('/customer_details/<account_id>')
+def get_customer_info(account_id):
+    cust = Account(account_id)
     res = cust.db_get_customer_info()[0]
     return render_template("display.html", account=res)
 

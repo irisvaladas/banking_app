@@ -16,8 +16,8 @@ def _connect_to_db(db_name):
     return cnx
 
 class Account:
-    def __init__(self, customer_ref):
-        self.customer_ref = customer_ref
+    def __init__(self, account_id):
+        self.account_id = account_id
 
     def db_get_customer_info(self):
         result = None
@@ -34,7 +34,34 @@ class Account:
                 where
                 customer_ref = %s
                 """
-            data = (self.customer_ref,)
+            data = (self.account_id,)
+            cur.execute(query, data)
+            result = cur.fetchall()  # this is a list with db records where each record is a tuple
+            cur.close()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+        finally:
+            if db_connection:
+                db_connection.close()
+                print("DB connection is closed")
+            return result
+
+    def db_customer_login(self):
+        result = None
+        db_connection = None
+        try:
+            db_name = 'bank_app'
+            db_connection = _connect_to_db(db_name)
+            cur = db_connection.cursor(dictionary=True)
+            print("Connected to DB: %s" % db_name)
+            query = """
+                SELECT
+                    *
+                FROM sec_p 
+                where
+                account_id = %s
+                """
+            data = (self.account_id,)
             cur.execute(query, data)
             result = cur.fetchall()  # this is a list with db records where each record is a tuple
             cur.close()
