@@ -46,7 +46,8 @@ class Account:
                 print("DB connection is closed")
             return result
 
-    def db_customer_login(self):
+    def db_customer_login(self, password):
+        self.password = password
         result = None
         db_connection = None
         try:
@@ -59,9 +60,9 @@ class Account:
                     *
                 FROM sec_p 
                 where
-                account_id = %s
+                account_id = %s and password = %s
                 """
-            data = (self.account_id,)
+            data = (self.account_id, self.password)
             cur.execute(query, data)
             result = cur.fetchall()  # this is a list with db records where each record is a tuple
             cur.close()
@@ -112,5 +113,5 @@ class Account:
 
 
 
-ramesh = Account(6623)
-print(ramesh.db_get_customer_info())
+ramesh = Account(223344)
+print(ramesh.db_customer_login(1))
