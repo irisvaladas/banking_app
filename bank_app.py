@@ -31,6 +31,11 @@ def login():
             msg='Incorrect account number/ password. Try again!'
     return render_template('index.html', msg=msg)
 
+@app.route('/logout')
+def logout():
+    session.pop('loggedin',None)
+    session.pop('username',None)
+    return redirect(url_for('index'))
 
 @app.route('/customer_details/<account_id>')
 def get_customer_info(account_id):
