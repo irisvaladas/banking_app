@@ -7,39 +7,38 @@
     <title>Document</title>
 </head>
 <body>
-
 <div class="contentbar">
     <h1>Your Details</h1>
     {% block content %}
     <div class="showdetails">
         <table class="details">
             <tr>
-                <td>First name:</td>
-                <td>{{ account['fname'] }}</td>
+                <td>Customer reference:</td>
+                <td>{{ account['customer_ref'] }}</td>
             </tr>
             <tr>
-                <td>Middle name:</td>
-                <td>{{ account['mname'] }}</td>
+                <td>First name:</td>
+                <td>{{ account['account_first_name'] }}</td>
             </tr>
             <tr>
                 <td>Last name:</td>
-                <td>{{ account['ltname'] }}</td>
+                <td>{{ account['account_last_name'] }}</td>
             </tr>
             <tr>
                 <td>City:</td>
-                <td>{{ account['city'] }}</td>
+                <td>{{ account['account_city'] }}</td>
+            </tr>
+            <tr>
+                <td>Adress:</td>
+                <td>{{ account['account_holder_address'] }}</td>
             </tr>
             <tr>
                 <td>Mobile Number:</td>
-                <td>{{ account['mobileno'] }}</td>
-            </tr>
-            <tr>
-                <td>Occupation:</td>
-                <td>{{ account['occupation'] }}</td>
+                <td>{{ account['account_holder_mobno'] }}</td>
             </tr>
             <tr>
                 <td>Date of birth:</td>
-                <td>{{ account['dob'] }}</td>
+                <td>{{ account['account_holder_dob'] }}</td>
             </tr>
         </table>
     </div>

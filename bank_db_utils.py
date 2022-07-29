@@ -15,26 +15,26 @@ def _connect_to_db(db_name):
     )
     return cnx
 
-class Customer:
-    def __init__(self, custid):
-        self.custid = custid
+class Account:
+    def __init__(self, customer_ref):
+        self.customer_ref = customer_ref
 
     def db_get_customer_info(self):
         result = None
         db_connection = None
         try:
-            db_name = 'bank'
+            db_name = 'bank_app'
             db_connection = _connect_to_db(db_name)
             cur = db_connection.cursor(dictionary=True)
             print("Connected to DB: %s" % db_name)
             query = """
                 SELECT
-                    c.fname, c.mname, c.ltname, c.city, c.mobileno, c.occupation, c.dob
-                FROM customer c
+                    *
+                FROM customer_details 
                 where
-                c.custid = %s
+                customer_ref = %s
                 """
-            data = (self.custid,)
+            data = (self.customer_ref,)
             cur.execute(query, data)
             result = cur.fetchall()  # this is a list with db records where each record is a tuple
             cur.close()
@@ -46,7 +46,7 @@ class Customer:
                 print("DB connection is closed")
             return result
 
-    def db_update_costumer_info(self, fname, mname, ltname, city, mobileno, occupation, dob):
+    def db_update_costumer_account(self, fname, mname, ltname, city, mobileno, occupation, dob):
         self.fname = fname
         self.mname = mname
         self.ltname = ltname
@@ -63,7 +63,7 @@ class Customer:
             query = """
                 UPDATE customer
                 Set fname = %s, mname = %s, ltname = %s, city = %s, mobileno = %s, occupation = %s, dob = %s
-                where custid = "C00001";
+                where custid = %s;
                 """
             data = (fname, mname, ltname, city, mobileno, occupation, dob)
             cur.executemany(query, data)  # this is a list with db records where each record is a tuple
@@ -76,8 +76,14 @@ class Customer:
                 db_connection.close()
                 print("DB connection is closed")
 
-#       
+
+# class Transactions():
+#
+#
+# class Bank:
+#
 
 
-ramesh = Customer("C00001")
+
+ramesh = Account(6623)
 print(ramesh.db_get_customer_info())

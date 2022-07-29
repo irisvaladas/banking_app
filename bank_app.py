@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template,redirect, url_for, session
-from bank_db_utils import Customer
+from flask import Flask, request, render_template, redirect, url_for, session
+from bank_db_utils import Account
 
 app = Flask(__name__)
 
-@app.route('/customer_details/<custid>')
-def get_customer_info(custid):
-    cust = Customer(custid)
+@app.route('/customer_details/<customer_ref>')
+def get_customer_info(customer_ref):
+    cust = Account(customer_ref)
     res = cust.db_get_customer_info()[0]
     return render_template("display.html", account=res)
 
