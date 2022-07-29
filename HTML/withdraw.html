@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class="navbar">
+    <img src="">
+    <div>
+        <a class="logoutbtn" href="{{ url_for('logout')}}"><input type="submit" class="navlogout"
+                                                                       value="Log out"></a>
+    </div>
+</div>
+<div class="accountinf">
+    <p class="accountnum">{{ account_num }}</p>
+    <p class="sortcode">{{ sort_code }}</p>
+</div>
+<div class="withdraw">
+    <h1>Withdraw</h1>
+    <p> How much would you like to withdraw ? </p>
+    <input type="text" name="withdraw" required>
+</div>
+</body>
+</html>

@@ -2,6 +2,10 @@ from flask import Flask, request, render_template, redirect, url_for, session
 from bank_db_utils import Account
 
 app = Flask(__name__)
+@app.route('/')
+def index():
+    return render_template("index.html")
+
 
 @app.route('/customer_details/<customer_ref>')
 def get_customer_info(customer_ref):

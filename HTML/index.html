@@ -1,0 +1,27 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="navbar">
+        <img src="">
+        <div>
+            <a class="registerhere" href="{{ url_for('register')}}"><input type="submit" class="navsign" value="Sign Up"></a>
+        </div>
+    </div>
+    <div class="loginform"></div>
+        <form action="{{ url_for('login')}}" method="post" autocomplete="off">
+            <div class="msg">{{ msg }}</div>
+            <input type="text" name="username" placeholder="UserName/Email">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" class="idxlogin" value="Login">
+        </form>
+    <div>
+        <p class="registerpar">Doesn't have an account? Sign up <a class="registerhere" href="{{ url_for('register')}}">here</a></p>
+    </div>
+</body>
+</html>
