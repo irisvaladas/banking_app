@@ -90,3 +90,25 @@ INSERT INTO trandetails VALUES('T00009',223300,'2013-03-21','Withdrawal',9000);
 INSERT INTO trandetails VALUES('T00010',337788,'2013-03-22','Withdrawal',2000);
 INSERT INTO trandetails VALUES('T00011',223311,'2013-03-25','Withdrawal',7000);
 INSERT INTO trandetails VALUES('T00012',333377,'2013-03-26','Withdrawal',2000);
+
+CREATE TABLE sec_p (
+    account_id INT NOT NULL,
+    password VARCHAR(30) NOT NULL,
+    FOREIGN KEY (ACCOUNT_ID)
+        REFERENCES Accounts (account_id)
+);
+
+INSERT INTO sec_p(account_id, password)
+values
+(223344, '123456'),
+(223355, '123456'),
+(446688, '123456'),
+(334466, '123456'),
+(334477, '123456'),
+(220055, '123456'),
+(443399, '123456'),
+(446699, '123456'),
+(223300, '123456'),
+(337788, '123456'),
+(223311, '123456'),
+(333377, '123456')
