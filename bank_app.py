@@ -10,10 +10,6 @@ app.secret_key = "super secret key"
 def index():
     return render_template("index.html")
 
-@app.route('/options')
-def options():
-    return render_template('options.html', account_id=session['account_id'])
-
 
 @app.route("/login", methods=['GET','POST'])
 def login():
@@ -31,6 +27,37 @@ def login():
             msg='Incorrect account number/ password. Try again!'
     return render_template('index.html', msg=msg)
 
+
+@app.route('/register')
+def register():
+    msg = ''
+    return render_template('register.html', msg=msg)
+
+@app.route('/options')
+def options():
+    return render_template('options.html', account_id=session['account_id'])
+
+@app.route('/transactions')
+def transactions():
+    return render_template('transactions.html', account_id=session['account_id'])
+
+@app.route('/withdraw')
+def withdraw():
+    return render_template('withdraw.html', account_id=session['account_id'])
+
+@app.route('/deposit')
+def deposit():
+    return render_template('deposit.html', account_id=session['account_id'])
+
+@app.route('/update')
+def update():
+    return render_template('update.html', account_id=session['account_id'])
+
+@app.route('/delete')
+def delete():
+    return render_template('index.html')
+
+
 @app.route('/logout')
 def logout():
     session.pop('loggedin',None)
@@ -46,11 +73,3 @@ def get_customer_info(account_id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-
-#
-# Example
-# @app.route('/students/<student_id>')
-# def get_student_info(student_id):
-#     res = db_get_student_info(student_id)
-#     return jsonify(res)
-#

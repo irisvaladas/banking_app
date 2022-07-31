@@ -15,6 +15,19 @@
     </div>
 </div>
 <h1>WELCOME TO BANK</h1>
-<p>THIS IS THE OPTIONS PAGE</p>
+<div class="two">
+    <h1>Options:</h1>
+    <ul>
+        <li><a href="{{url_for('transactions')}}">View transactions</a></li>
+        <li>Perform Transactions
+            <ul>
+                <li><a href="{{url_for('withdraw')}}">withdraw</a></li>
+                <li><a href="{{url_for('deposit')}}">deposit</a></li>
+            </ul>
+        </li>
+        <li><a href="{{url_for('update')}}">Update</a></li>
+        <li><a href="{{url_for('delete')}}">Delete account</a></li>
+    </ul>
+</div>
 </body>
 </html>

@@ -7,6 +7,13 @@
     <title>Document</title>
 </head>
 <body>
+<div class="navbar">
+    <img src="">
+    <div>
+        <a class="logoutbtn" href="{{ url_for('logout')}}"><input type="submit" class="navlogout"
+                                                                       value="Log out"></a>
+    </div>
+</div>
 <div class="contentbar">
     <h1>Your Details</h1>
     {% block content %}
