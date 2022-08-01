@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 app.secret_key = "super secret key"
 
-
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -37,6 +36,14 @@ def register():
 def options():
     return render_template('options.html', account_id=session['account_id'])
 
+@app.route('/customer_details')
+def details():
+    if 'loggedin' in session:
+        cust = Account(session['account_id'][0]['account_id'])
+        res = cust.db_get_customer_info()[0]
+        return render_template("display.html", account=res)
+    return render_template('index.html')
+
 @app.route('/transactions')
 def transactions():
     return render_template('transactions.html', account_id=session['account_id'])
@@ -63,13 +70,6 @@ def logout():
     session.pop('loggedin',None)
     session.pop('username',None)
     return redirect(url_for('index'))
-
-@app.route('/customer_details/<account_id>')
-def get_customer_info(account_id):
-    cust = Account(account_id)
-    res = cust.db_get_customer_info()[0]
-    return render_template("display.html", account=res)
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
