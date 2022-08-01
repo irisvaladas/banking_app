@@ -16,8 +16,8 @@ def login():
     if request.method == 'POST':
         account_id = request.form['account_id']
         password = request.form['password']
-        cust = Account(account_id)
-        record = cust.db_customer_login(password)
+        record = Account().db_customer_login((account_id, password))
+        print(record)
         if record:
             session['loggedin'] = True
             session['account_id'] = record
@@ -39,8 +39,8 @@ def options():
 @app.route('/customer_details')
 def details():
     if 'loggedin' in session:
-        cust = Account(session['account_id'][0]['account_id'])
-        res = cust.db_get_customer_info()[0]
+        res = Account().db_get_customer_info(session['account_id'][0]['account_id'])
+        print(res)
         return render_template("display.html", account=res)
     return render_template('index.html')
 
