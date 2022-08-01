@@ -32,7 +32,7 @@ class Account:
                     *
                 FROM customer_details 
                 where
-                customer_ref = %s
+                account_id = %s
                 """
             data = (self.account_id,)
             cur.execute(query, data)
@@ -110,8 +110,3 @@ class Account:
 #
 # class Bank:
 #
-
-
-
-ramesh = Account(223344)
-print(ramesh.db_customer_login(1))
