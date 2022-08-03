@@ -24,7 +24,7 @@ class Database:
 
 class Account(Database):
     def db_get_customer_info(self,account_id):
-
+        result = ""
         query = "SELECT * from customer_details where account_id = {}".format(account_id)
 
         try:
@@ -32,10 +32,13 @@ class Account(Database):
             result = cur.fetchone()  # this is a list with db records where each record is a tuple
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
-
-        return result
+        finally:
+            if cnx:
+                cnx.close()
+            return result
 
     def db_customer_login(self, data):
+        result = ""
         query = """
                         SELECT
                             *
@@ -48,8 +51,10 @@ class Account(Database):
             result = cur.fetchall()  # this is a list with db records where each record is a tuple
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
-
-        return result
+        finally:
+            if cnx:
+                cnx.close()
+            return result
 
     # def db_update_costumer_account(self, fname, mname, ltname, city, mobileno, occupation, dob):
     #     self.fname = fname
@@ -82,8 +87,22 @@ class Account(Database):
     #             print("DB connection is closed")
 
 
-# class Transactions(Account):
-
+class Transactions(Account):
+    def db_get_customer_transactions(self, data):
+        result=""
+        query = """SELECT * from trandetails 
+        where account_id = %s 
+        AND dot between %s and %s;"""
+        # AND dot between cast( % s as date) and cast( % s as date);"""
+        try:
+            cur.execute(query,data)
+            result = cur.fetchall()  # this is a list with db records where each record is a tuple
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+        finally:
+            if cnx:
+                cnx.close()
+            return result
 #
 #
 # class Bank:
