@@ -5,85 +5,126 @@ from config import USER, PASSWORD, HOST
 class DbConnectionError(Exception):
     pass
 
+class Database:
+    cnx = cur = None
 
-def _connect_to_db(db_name):
-    cnx = mysql.connector.connect(
-        host=HOST,
-        user=USER,
-        password=PASSWORD,
-        database=db_name
-    )
-    return cnx
+    def __init__(self):
+        global cnx, cur
+        cnx = mysql.connector.connect(
+            host=HOST,
+            user=USER,
+            password=PASSWORD,
+            database="bank_app"
+        )
+        cur = cnx.cursor(dictionary=True)
 
-class Account:
-    def __init__(self, customer_ref):
-        self.customer_ref = customer_ref
+    def __del__(self):
+        cnx.commit()
 
-    def db_get_customer_info(self):
-        result = None
-        db_connection = None
+
+class Account(Database):
+    def db_get_customer_info(self,account_id):
+        result = ""
+        query = "SELECT * from customer_details where account_id = {}".format(account_id)
+
         try:
-            db_name = 'bank_app'
-            db_connection = _connect_to_db(db_name)
-            cur = db_connection.cursor(dictionary=True)
-            print("Connected to DB: %s" % db_name)
-            query = """
-                SELECT
-                    *
-                FROM customer_details 
-                where
-                customer_ref = %s
-                """
-            data = (self.customer_ref,)
-            cur.execute(query, data)
-            result = cur.fetchall()  # this is a list with db records where each record is a tuple
-            cur.close()
+            cur.execute(query)
+            result = cur.fetchone()  # this is a list with db records where each record is a tuple
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
         finally:
-            if db_connection:
-                db_connection.close()
-                print("DB connection is closed")
             return result
 
-    def db_update_costumer_account(self, fname, mname, ltname, city, mobileno, occupation, dob):
-        self.fname = fname
-        self.mname = mname
-        self.ltname = ltname
-        self.city = city
-        self.mobileno = mobileno
-        self.occupation = occupation
-        self.dob = dob
-        db_connection = None
+    def db_customer_login(self, data):
+        result = ""
+        query = """
+                        SELECT
+                            *
+                        FROM sec_p 
+                        where
+                        account_id = %s and password = %s
+                        """
         try:
-            db_name = 'bank'
-            db_connection = _connect_to_db(db_name)
-            cur = db_connection.cursor()
-            print("Connected to DB: %s" % db_name)
-            query = """
-                UPDATE customer
-                Set fname = %s, mname = %s, ltname = %s, city = %s, mobileno = %s, occupation = %s, dob = %s
-                where custid = %s;
-                """
-            data = (fname, mname, ltname, city, mobileno, occupation, dob)
-            cur.executemany(query, data)  # this is a list with db records where each record is a tuple
-            db_connection.commit()
-            cur.close()
+            cur.execute(query,data)
+            result = cur.fetchall()  # this is a list with db records where each record is a tuple
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
         finally:
-            if db_connection:
-                db_connection.close()
-                print("DB connection is closed")
+            return result
+
+    def db_update_costumer_account(self, data):
+        query = """
+                        UPDATE customer
+                        Set fname = %s, mname = %s, ltname = %s, city = %s, mobileno = %s, occupation = %s, dob = %s
+                        where custid = %s;
+                        """
+        try:
+            cur.execute(query, data)  # this is a list with db records where each record is a tuple
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
+    def show_balance(self, account_id):
+        result = ""
+        query = f"SELECT account_balance from accounts where account_id = {account_id};"
+
+        try:
+            cur.execute(query)
+            result = cur.fetchone()  # this is a list with db records where each record is a tuple
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+        return result
 
 
-# class Transactions():
+class Transactions(Account):
+    def db_get_customer_transactions(self, data):
+        result=""
+        query = """SELECT * from trandetails 
+        where account_id = %s 
+        AND dot between %s and %s;"""
+        # AND dot between cast( % s as date) and cast( % s as date);"""
+        try:
+            cur.execute(query,data)
+            result = cur.fetchall()  # this is a list with db records where each record is a tuple
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+        finally:
+            return result
+
+    def withdraw(self, data):
+
+        result = ""
+        query = """update accounts set account_balance = ((select account_balance where account_id = %s) - %s) 
+                   where account_id = %s;"""
+        if (self.show_balance(data[0]))['account_balance'] >= data[1]:
+
+            try:
+                cur.execute(query, data)
+                cnx.commit()
+            except Exception:
+                raise DbConnectionError("Failed to read data from DB")
+            finally:
+                return result
+
+    def deposit(self, data):
+
+        result = ""
+        query = """update accounts set account_balance = ((select account_balance where account_id = %s) + %s) 
+                   where account_id = %s;"""
+        if self.show_balance(data) == data[0]:
+            try:
+                cur.execute(query, data)
+                cnx.commit()
+            except Exception:
+                raise DbConnectionError("Failed to read data from DB")
+            finally:
+                return result
 #
 #
 # class Bank:
 #
-
-
-
-ramesh = Account(6623)
-print(ramesh.db_get_customer_info())
+camille = Account()
+print(camille.show_balance(223344))
+trans1 = Transactions()
+trans1.withdraw((223344, 100, 223344))
+#print(camille.db_get_customer_info(223344))
