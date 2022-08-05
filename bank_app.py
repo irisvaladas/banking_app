@@ -58,9 +58,6 @@ def select_transactions():
             date_from = request.form['date_from']
             date_to = request.form['date_to']
             res = Transactions().db_get_customer_transactions((session['account_id'][0]['account_id'], date_from, date_to))
-            if res == None:
-                res = Transactions().db_get_customer_transactions(
-                    (session['account_id'][0]['account_id'], datetime.today().strftime('%Y-%m-%d'), (datetime.today() + relativedelta(months=+6)).strftime('%Y-%m-%d')))
             return render_template('transactions.html', account=res)
     return render_template('index.html')
 

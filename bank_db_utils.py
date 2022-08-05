@@ -33,8 +33,6 @@ class Account(Database):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
         finally:
-            if cnx:
-                cnx.close()
             return result
 
     def db_customer_login(self, data):
@@ -52,39 +50,30 @@ class Account(Database):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
         finally:
-            if cnx:
-                cnx.close()
             return result
 
-    # def db_update_costumer_account(self, fname, mname, ltname, city, mobileno, occupation, dob):
-    #     self.fname = fname
-    #     self.mname = mname
-    #     self.ltname = ltname
-    #     self.city = city
-    #     self.mobileno = mobileno
-    #     self.occupation = occupation
-    #     self.dob = dob
-    #     db_connection = None
-    #     try:
-    #         db_name = 'bank'
-    #         db_connection = _connect_to_db(db_name)
-    #         cur = db_connection.cursor()
-    #         print("Connected to DB: %s" % db_name)
-    #         query = """
-    #             UPDATE customer
-    #             Set fname = %s, mname = %s, ltname = %s, city = %s, mobileno = %s, occupation = %s, dob = %s
-    #             where custid = %s;
-    #             """
-    #         data = (fname, mname, ltname, city, mobileno, occupation, dob)
-    #         cur.executemany(query, data)  # this is a list with db records where each record is a tuple
-    #         db_connection.commit()
-    #         cur.close()
-    #     except Exception:
-    #         raise DbConnectionError("Failed to read data from DB")
-    #     finally:
-    #         if db_connection:
-    #             db_connection.close()
-    #             print("DB connection is closed")
+    def db_update_costumer_account(self, data):
+        query = """
+                        UPDATE customer
+                        Set fname = %s, mname = %s, ltname = %s, city = %s, mobileno = %s, occupation = %s, dob = %s
+                        where custid = %s;
+                        """
+        try:
+            cur.execute(query, data)  # this is a list with db records where each record is a tuple
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
+    def show_balance(self, account_id):
+        result = ""
+        query = f"SELECT account_balance from accounts where account_id = {account_id};"
+
+        try:
+            cur.execute(query)
+            result = cur.fetchone()  # this is a list with db records where each record is a tuple
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+        return result
 
 
 class Transactions(Account):
@@ -100,10 +89,42 @@ class Transactions(Account):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
         finally:
-            if cnx:
-                cnx.close()
             return result
+
+    def withdraw(self, data):
+
+        result = ""
+        query = """update accounts set account_balance = ((select account_balance where account_id = %s) - %s) 
+                   where account_id = %s;"""
+        if (self.show_balance(data[0]))['account_balance'] >= data[1]:
+
+            try:
+                cur.execute(query, data)
+                cnx.commit()
+            except Exception:
+                raise DbConnectionError("Failed to read data from DB")
+            finally:
+                return result
+
+    def deposit(self, data):
+
+        result = ""
+        query = """update accounts set account_balance = ((select account_balance where account_id = %s) + %s) 
+                   where account_id = %s;"""
+        if self.show_balance(data) == data[0]:
+            try:
+                cur.execute(query, data)
+                cnx.commit()
+            except Exception:
+                raise DbConnectionError("Failed to read data from DB")
+            finally:
+                return result
 #
 #
 # class Bank:
 #
+camille = Account()
+print(camille.show_balance(223344))
+trans1 = Transactions()
+trans1.withdraw((223344, 100, 223344))
+#print(camille.db_get_customer_info(223344))
