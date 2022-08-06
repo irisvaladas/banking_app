@@ -61,13 +61,42 @@ def select_transactions():
             return render_template('transactions.html', account=res)
     return render_template('index.html')
 
-@app.route('/withdraw')
-def withdraw():
-    return render_template('withdraw.html', account_id=session['account_id'])
+@app.route('/withdrawal', methods=['GET','POST'])
+def withdrawal():
+    if 'loggedin' in session:
+        balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+        return render_template('withdraw.html', balance=balance)
 
-@app.route('/deposit')
+@app.route('/make_withdrawal', methods=['GET','POST'])
+def make_withdrawal():
+    if 'loggedin' in session:
+        amount = 0
+        if request.method == 'POST':
+            amount = int(request.form['withdraw'])
+            print(amount)
+            Transactions().withdraw((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
+            Transactions().update_transactions(('T00023',session['account_id'][0]['account_id'],datetime.today().strftime('%Y-%m-%d'), 'Withdrawal', amount ))
+            balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+            return render_template('withdraw.html', balance=balance)
+    return render_template('index.html')
+
+
+@app.route('/deposit', methods=['GET','POST'])
 def deposit():
-    return render_template('deposit.html', account_id=session['account_id'])
+    if 'loggedin' in session:
+        balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+        return render_template('deposit.html', balance=balance)
+
+@app.route('/make_deposit', methods=['GET','POST'])
+def make_deposit():
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            amount = int(request.form['deposit'])
+            Transactions().deposit((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
+            Transactions().update_transactions((datetime.today().strftime('%Y-%m-%d'), 'Deposit', amount,(session['account_id'][0]['account_id'])))
+            balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+            return render_template('deposit.html', balance=balance)
+    return render_template('index.html')
 
 @app.route('/update')
 def update():
