@@ -75,7 +75,7 @@ def make_withdrawal():
             amount = int(request.form['withdraw'])
             print(amount)
             Transactions().withdraw((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
-            Transactions().update_transactions(('T00023',session['account_id'][0]['account_id'],datetime.today().strftime('%Y-%m-%d'), 'Withdrawal', amount ))
+            Transactions().update_transactions(('T00025',session['account_id'][0]['account_id'],datetime.today().strftime('%Y-%m-%d'), 'Withdrawal', amount ))
             balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
             return render_template('withdraw.html', balance=balance)
     return render_template('index.html')
@@ -115,3 +115,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
+
