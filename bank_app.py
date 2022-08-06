@@ -75,7 +75,7 @@ def make_withdrawal():
             amount = int(request.form['withdraw'])
             print(amount)
             Transactions().withdraw((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
-            Transactions().update_transactions(('T00025',session['account_id'][0]['account_id'],datetime.today().strftime('%Y-%m-%d'), 'Withdrawal', amount ))
+            Transactions().update_transactions((0,session['account_id'][0]['account_id'],datetime.today().strftime('%Y-%m-%d'), 'Withdrawal', amount ))
             balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
             return render_template('withdraw.html', balance=balance)
     return render_template('index.html')
@@ -93,7 +93,7 @@ def make_deposit():
         if request.method == 'POST':
             amount = int(request.form['deposit'])
             Transactions().deposit((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
-            Transactions().update_transactions((datetime.today().strftime('%Y-%m-%d'), 'Deposit', amount,(session['account_id'][0]['account_id'])))
+            Transactions().update_transactions((0,session['account_id'][0]['account_id'],datetime.today().strftime('%Y-%m-%d'), 'Deposit', amount ))
             balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
             return render_template('deposit.html', balance=balance)
     return render_template('index.html')

@@ -39,8 +39,8 @@ class Account(Database):
         result = ""
         query = """
                         SELECT
-                            *
-                        FROM sec_p 
+                            account_id,password
+                        FROM customer_details 
                         where
                         account_id = %s and password = %s
                         """
