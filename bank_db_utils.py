@@ -92,39 +92,42 @@ class Transactions(Account):
             return result
 
     def withdraw(self, data):
-
-        result = ""
         query = """update accounts set account_balance = ((select account_balance where account_id = %s) - %s) 
                    where account_id = %s;"""
         if (self.show_balance(data[0]))['account_balance'] >= data[1]:
-
             try:
                 cur.execute(query, data)
                 cnx.commit()
             except Exception:
                 raise DbConnectionError("Failed to read data from DB")
-            finally:
-                return result
+
 
     def deposit(self, data):
-
-        result = ""
         query = """update accounts set account_balance = ((select account_balance where account_id = %s) + %s) 
                    where account_id = %s;"""
-        if self.show_balance(data) == data[0]:
-            try:
-                cur.execute(query, data)
-                cnx.commit()
-            except Exception:
-                raise DbConnectionError("Failed to read data from DB")
-            finally:
-                return result
-#
-#
+        try:
+            cur.execute(query, data)
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
+
+    def update_transactions(self, data):
+        query = """INSERT INTO trandetails 
+        VALUES(%s,%s,%s,%s,%s);"""
+        try:
+            cur.execute(query, data)
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
+
 # class Bank:
 #
-camille = Account()
-print(camille.show_balance(223344))
-trans1 = Transactions()
-trans1.withdraw((223344, 100, 223344))
+# camille = Account()
+# print(camille.show_balance(223344))
+# trans1 = Transactions()
+# # trans1.withdraw((223344, 100, 223344))
+# trans1.deposit((223344, 100, 223344))
+# trans1 = Transactions()
 #print(camille.db_get_customer_info(223344))
