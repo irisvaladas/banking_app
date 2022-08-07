@@ -98,9 +98,19 @@ def make_deposit():
             return render_template('deposit.html', balance=balance)
     return render_template('index.html')
 
-@app.route('/update')
+@app.route('/update', methods = ['GET','POST'])
 def update():
-    return render_template('update.html', account_id=session['account_id'])
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            fname = request.form["account_first_name"]
+            lname = request.form["account_last_name"]
+            address = request.form["account_holder_address"]
+            city = request.form["account_city"]
+            mobno = request.form["account_holder_mobno"]
+            dob = request.form["account_holder_dob"]
+            password = request.form["password"]
+            Account().db_update_costumer_account((fname,lname,address,city,mobno,dob,password,session['account_id'][0]['account_id']))
+        return render_template('update.html', account_id=session['account_id'])
 
 @app.route('/delete')
 def delete():

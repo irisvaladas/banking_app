@@ -16,17 +16,14 @@
 </div>
 <div class="resgisterform">
     <form action="{{ url_for('update')}}" method="post" autocomplete="on">
-        <div class="msg">{{ msg }}</div>
-        <input type="text" name="username" placeholder="Enter Your Username" class="textbox" id="username" required>
-        <input type="password" name="password" placeholder="Enter Your Password" class="textbox" id="password" required>
-        <input type="email" name="email" placeholder="Enter Your Email ID" class="textbox" id="email" required>
-        <input type="text" name="address" placeholder="Enter Your Address" class="textbox" id="address" required>
-        <input type="text" name="city" placeholder="Enter Your City" class="textbox" id="city" required>
-        <input type="text" name="state" placeholder="Enter Your State" class="textbox" id="state" required>
-        <input type="text" name="country" placeholder="Enter Your Country" class="textbox" id="country" required>
-        <input type="text" name="postalcode" placeholder="Enter Your Postal Code" class="textbox" id="postalcode"
-               required>
-        <input type="submit" class="btn" value="Update">
+        <input type="text" name="account_first_name" placeholder="First Name" class="textbox" required>
+        <input type="text" name="account_last_name" placeholder="Last Names" class="textbox" required>
+        <input type="text" name="account_holder_address" placeholder="Address" class="textbox" required>
+        <input type="text" name="account_city" placeholder="County" class="textbox" required>
+        <input type="text" name="account_holder_mobno" placeholder="Mobile Number" class="textbox" required>
+        <input type="text" name="account_holder_dob" placeholder="Date of Birth" class="textbox" required>
+        <input type="password" name="password" placeholder="Password" class="textbox" required>
+        <input type="submit" class="btnupdate" value="Update">
     </form>
 </div>
 </body>

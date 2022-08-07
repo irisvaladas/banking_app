@@ -54,9 +54,10 @@ class Account(Database):
 
     def db_update_costumer_account(self, data):
         query = """
-                        UPDATE customer
-                        Set fname = %s, mname = %s, ltname = %s, city = %s, mobileno = %s, occupation = %s, dob = %s
-                        where custid = %s;
+                        UPDATE customer_details
+                        Set account_first_name = %s, account_last_name = %s, account_holder_address = %s, account_city = %s, 
+                        account_holder_mobno = %s, account_holder_dob = %s, password = %s
+                        where account_id = %s;
                         """
         try:
             cur.execute(query, data)  # this is a list with db records where each record is a tuple
