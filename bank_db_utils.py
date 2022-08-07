@@ -67,7 +67,6 @@ class Account(Database):
     def show_balance(self, account_id):
         result = ""
         query = f"SELECT account_balance from accounts where account_id = {account_id};"
-
         try:
             cur.execute(query)
             result = cur.fetchone()  # this is a list with db records where each record is a tuple
