@@ -28,11 +28,46 @@ def login():
             msg='Incorrect account number/ password. Try again!'
     return render_template('index.html', msg=msg)
 
-
 @app.route('/register')
 def register():
-    msg = ''
-    return render_template('register.html', msg=msg)
+    return render_template("register.html")
+@app.route('/registration', methods = ['GET','POST'])
+def registration():
+    if request.method == 'POST':
+        fname = request.form["account_first_name"]
+        lname = request.form["account_last_name"]
+        address = request.form["account_holder_address"]
+        city = request.form["account_city"]
+        mobno = request.form["account_holder_mobno"]
+        dob = request.form["account_holder_dob"]
+        balance = request.form["account_balance"]
+        overdraft = request.form["overdraft_amount"]
+        account_type = request.form["account_type"]
+        if account_type=="Savings account":
+            account_type=1
+        elif account_type=="Savings account":
+            account_type=2
+        password = request.form["password"]
+        Account().db_create_customer(
+            (fname, lname, address, city, mobno, dob, password))
+        gen_id = Account().db_get_generated_id()['max(account_id)']
+        print(gen_id)
+        Account().db_create_account((balance,overdraft,account_type,gen_id))
+    return render_template('index.html')
+
+@app.route('/update', methods = ['GET','POST'])
+def update():
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            fname = request.form["account_first_name"]
+            lname = request.form["account_last_name"]
+            address = request.form["account_holder_address"]
+            city = request.form["account_city"]
+            mobno = request.form["account_holder_mobno"]
+            dob = request.form["account_holder_dob"]
+            password = request.form["password"]
+            Account().db_update_costumer_account((fname,lname,address,city,mobno,dob,password,session['account_id'][0]['account_id']))
+        return render_template('update.html', account_id=session['account_id'])
 
 @app.route('/options')
 def options():
@@ -97,20 +132,6 @@ def make_deposit():
             balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
             return render_template('deposit.html', balance=balance)
     return render_template('index.html')
-
-@app.route('/update', methods = ['GET','POST'])
-def update():
-    if 'loggedin' in session:
-        if request.method == 'POST':
-            fname = request.form["account_first_name"]
-            lname = request.form["account_last_name"]
-            address = request.form["account_holder_address"]
-            city = request.form["account_city"]
-            mobno = request.form["account_holder_mobno"]
-            dob = request.form["account_holder_dob"]
-            password = request.form["password"]
-            Account().db_update_costumer_account((fname,lname,address,city,mobno,dob,password,session['account_id'][0]['account_id']))
-        return render_template('update.html', account_id=session['account_id'])
 
 @app.route('/delete')
 def delete():

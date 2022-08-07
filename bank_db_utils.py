@@ -65,6 +65,36 @@ class Account(Database):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
 
+    def db_create_customer(self, data):
+        query = """INSERT INTO customer_details 
+        VALUES(null,%s,%s,%s,%s,%s,%s,%s);"""
+        try:
+            cur.execute(query, data)  # this is a list with db records where each record is a tuple
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
+    def db_get_generated_id(self):
+        result = ""
+        query = """select max(account_id) from customer_details"""
+        try:
+            cur.execute(query)  # this is a list with db records where each record is a tuple
+            result=cur.fetchone()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+        finally:
+            return result
+
+    def db_create_account(self, data):
+        query = """Update accounts set account_balance = %s, 
+        overdraft_amount = %s, account_type_id = %s where account_id = %s;
+        """
+        try:
+            cur.execute(query, data)  # this is a list with db records where each record is a tuple
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
     def show_balance(self, account_id):
         result = ""
         query = f"SELECT account_balance from accounts where account_id = {account_id};"
@@ -74,7 +104,8 @@ class Account(Database):
             result = cur.fetchone()  # this is a list with db records where each record is a tuple
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
-        return result
+        finally:
+            return result
 
 
 class Transactions(Account):
