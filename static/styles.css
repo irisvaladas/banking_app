@@ -1,0 +1,156 @@
+* {
+    margin:0;
+    padding:0;
+    font-size:100%;
+}
+
+.navbar{
+    display: flex;
+    height:60px;
+    justify-content: space-between;
+    padding:5px 30px 5px 30px;
+    background-color: #4558FF;
+    align-items: center;
+}
+
+.navbar div{
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color:white;
+}
+
+
+.registerhere {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 37px;
+    gap: 10px;
+    background: #FFFFFF;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 39px;
+    border: 0px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    color: #0092E4;
+    transition: 0.3s
+}
+
+.aSignup {
+    text-decoration: none;
+}
+
+.registerhere:hover {
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.registerhere:active {
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.content{
+    padding-top:50px;
+    width:100%;
+    display:flex;
+    Justify-content:center;
+}
+
+.loginform{
+    width:250px;
+    height: 300px;
+    display:flex;
+    padding:30px;
+    flex-direction:column;
+    justify-content:space-evenly;
+    align-items: center;
+    box-shadow: 2px 0px 10px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 14px 10px 2px;
+
+}
+
+.title{
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color:rgb(0, 0, 0);
+}
+
+.form{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.btnlogin {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 37px;
+    gap: 10px;
+    background: #0092E4;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 39px;
+    border: 0px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    color: #ffffff;
+    transition: 0.3s
+}
+
+
+.btnlogin:hover {
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.btnlogin:active {
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.msg {
+    font-family: "Arial";
+    font-size:10px;
+    margin-bottom: 20px;
+}
+
+.input{
+    width: 100%;
+    padding: 8px 16px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom:15px;
+    margin-top:5px
+}
+
+.label{
+    font-family: "Arial";
+    font-size:13px;
+}
+
+.logcont {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.registerq {
+    font-family: "Arial";
+    font-size:10px;
+    margin-bottom: 20px;
+}

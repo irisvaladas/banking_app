@@ -5,21 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-    <div class="loginform">
-        <p>This is the login page</p>
+    <div class="navbar">
+        <div>BANK</div>
+        <a class="aSignup" href="{{ url_for('register')}}"><input type="Submit" value="Sign up" class="registerhere"></a>
     </div>
-    <div class="loginform">
-        <form action="{{ url_for('login')}}" method="post" autocomplete="off">
-            <div class="msg">{{ msg }}</div>
-            <input type="text" name="account_id" placeholder="Account number">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" class="idxlogin" value="Login">
-        </form>
+    <div class="content">
+        <div class="loginform">
+            <p class="title">Login</p>
+            <form action="{{ url_for('login')}}" method="post" autocomplete="off" class="form">
+                <div class="msg">{{ msg }}</div>
+                <label class="label" for="account_id">Account id:</label>
+                <input  class="input" id="account_id" type="text" name="account_id" placeholder="Account number">
+                <label class="label" for="password">Password:</label>
+                <input class="input" id="password" type="password" name="password" placeholder="Password">
+                <div class="logcont">
+                    <input type="submit" class="btnlogin" value="Login">
+                </div>
+            </form>
+            <p class="registerq">Doesn't have an account? Sign up <a class="registerlink" href="{{ url_for('register')}}">here</a></p>
+        </div>
     </div>
     <div>
-        <p class="registerpar">Doesn't have an account? Sign up <a class="registerhere" href="{{ url_for('register')}}">here</a></p>
     </div>
 </body>
 </html>
