@@ -155,11 +155,3 @@ class Transactions(Account):
 
 
 # class Bank:
-#
-# camille = Account()
-# print(camille.show_balance(223344))
-# trans1 = Transactions()
-# # trans1.withdraw((223344, 100, 223344))
-# trans1.deposit((223344, 100, 223344))
-# trans1 = Transactions()
-#print(camille.db_get_customer_info(223344))
