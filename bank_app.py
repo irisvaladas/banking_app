@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for, session
-from bank_db_utils import Account, Transactions
+from bank_db_utils import Account, Transactions, Bank
 from datetime import datetime
+import requests
+import json
 from dateutil.relativedelta import relativedelta
 
 app = Flask(__name__)
@@ -71,7 +73,9 @@ def update():
 
 @app.route('/options')
 def options():
-    return render_template('options.html', account_id=session['account_id'])
+    account_balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+    currencies = requests.get("http://api.frankfurter.app/currencies").json()
+    return render_template('options.html', account_balance=account_balance, currencies=currencies)
 
 @app.route('/customer_details')
 def details():
@@ -132,6 +136,19 @@ def make_deposit():
             balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
             return render_template('deposit.html', balance=balance)
     return render_template('index.html')
+
+@app.route('/currency_exchange', methods=['GET','POST'])
+def currency_exchange():
+    if 'loggedin' in session:
+        if request.method == "POST":
+            currency=request.form["currency"]
+            account_balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+            value = Bank().balance_currency_exchange(currency,session['account_id'][0]['account_id'])
+            currencies = requests.get("http://api.frankfurter.app/currencies").json()
+            return render_template('options.html', value=value, currencies=currencies, currency=currency, account_balance=account_balance)
+    return render_template('index.html')
+
+
 
 @app.route('/delete')
 def delete():

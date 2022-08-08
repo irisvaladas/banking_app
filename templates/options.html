@@ -14,7 +14,19 @@
                                                                        value="Log out"></a>
     </div>
 </div>
-<h1>WELCOME TO BANK</h1>
+<h1>Banking System</h1>
+<div>GBP {{ account_balance }}</div>
+<div>{{ currency }} {{ value }}</div>
+
+<form action="{{url_for('currency_exchange')}}" method="post">
+    <p>Currency exchange:</p>
+    <select name="currency">
+        {% for k,v in currencies.items() %}
+            <option value="{{ k }}">{{ k }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Calculate">
+</form>
 <div class="two">
     <h1>Options:</h1>
     <ul>

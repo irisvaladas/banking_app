@@ -1,5 +1,6 @@
 import mysql.connector
 from config import USER, PASSWORD, HOST
+import requests
 
 
 class DbConnectionError(Exception):
@@ -152,5 +153,12 @@ class Transactions(Account):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
 
+class Bank(Account):
+    def balance_currency_exchange(self, to_currency, account_id):
+        from_currency = 'GBP'
+        balance = float(self.show_balance(account_id).get('account_balance'))
+        result = requests.get(
+            f"https://api.frankfurter.app/latest?amount={balance}&from={from_currency}&to={to_currency}")
+        return result.json()['rates'][to_currency]
 
-# class Bank:
+print(Bank().balance_currency_exchange("EUR",20001))
