@@ -14,15 +14,18 @@
                                                                        value="Log out"></a>
     </div>
 </div>
-<h1>WELCOME TO BANK</h1>
+<div class="accountinf">
+    <p class="accountnum">{{ account_num }}</p>
+    <p class="sortcode">{{ sort_code }}</p>
+</div>
 <div class="two">
     <h1>Options:</h1>
     <ul>
-        <li><a href="{{url_for('details')}}">Profile</a></li>
+        <li><a href="??????">Bank Statement(Download)</a></li>
         <li><a href="{{url_for('transactions')}}">View transactions</a></li>
         <li>Perform Transactions
             <ul>
-                <li><a href="{{url_for('withdrawal')}}">withdraw</a></li>
+                <li><a href="{{url_for('withdraw')}}">withdraw</a></li>
                 <li><a href="{{url_for('deposit')}}">deposit</a></li>
             </ul>
         </li>

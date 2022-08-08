@@ -2,31 +2,32 @@ CREATE DATABASE BANK_APP;
 USE BANK_APP;
 
 CREATE TABLE Customer_details (
-    account_id INT NOT NULL,
-    customer_ref INT NOT NULL,
+    account_id INT AUTO_INCREMENT PRIMARY KEY,
     account_first_name VARCHAR(50) NOT NULL,
     account_last_name VARCHAR(50) NOT NULL,
     account_holder_address VARCHAR(200) DEFAULT NULL,
     account_city VARCHAR(100) DEFAULT NULL,
     account_holder_mobno BIGINT NOT NULL,
     account_holder_dob DATE,
-    PRIMARY KEY (customer_ref)
+    password VARCHAR(50) NOT NULL
 );
 
-INSERT INTO Customer_details(account_id, customer_ref, account_first_name, account_last_name, account_holder_address, account_city, account_holder_mobno, account_holder_dob)
+ALTER TABLE Customer_details AUTO_INCREMENT=20001;
+
+INSERT INTO Customer_details(account_id, account_first_name, account_last_name, account_holder_address, account_city, account_holder_mobno, account_holder_dob, password)
 VALUES
-(223344, 9091,'Camille', 'Downie', '78, Holder Street', 'Glasgow', 07700900129, '1950-01-01'),
-(223355, 9065,'Chenelle', 'Brown', '34 Comer Road', 'Cardiff', 07700900800,'1960-02-02'),
-(334466, 9876, 'Shania', 'Smith', '5 Downing Drive', 'London', 07700900716,'1970-03-03'),
-(334477, 9212, 'Tolu', 'Ademola', '90 Dolphin Road', 'Port Harcourt', 07700900700,'1970-04-04'),
-(443399, 6623, 'Efyah', 'Bonsu', '2 Kiki Close', 'Accra', 07700900815,'1970-05-05'),
-(220055, 9342, 'Efyah', 'Bonsu', '2 Kiki Close', 'Accra', 07700900580,'1970-06-06'),
-(446688, 6690, 'Mekhai', 'Sun', '78 Holder Street', 'Glasgow', 07700900287,'1970-07-07'),
-(446699, 6670, 'Abigail', 'Gordon', '1 Pluck Drive', 'Newcastle', 07700900497,'1970-08-08'),
-(223300, 9438, 'Abigail', 'Gordon', '1 Pluck Drive', 'Newcastle', 07700900131,'1970-09-09'),
-(337788, 9360,'Iris', 'Valadas', '18 Score Road', 'London', 07700900818,'1970-10-10'),
-(223311, 9195, 'Charlotte', 'Diamond', '67 Range Road', 'Manchester', 07700900619,'1970-11-11'),
-(333377, 9958, 'Gabriela', 'Rangel', '23 Cranham Gardens', 'Birmingham', 07700900728,'1970-12-12');
+(NULL,'Camille', 'Downie', '78, Holder Street', 'Glasgow', 07700900129, '1950-01-01',"123456"),
+(NULL,'Chenelle', 'Brown', '34 Comer Road', 'Cardiff', 07700900800, '1960-02-02',"123456"),
+(NULL,'Shania', 'Smith', '5 Downing Drive', 'London', 07700900716, '1970-03-03',"123456"),
+(NULL,'Tolu', 'Ademola', '90 Dolphin Road', 'Port Harcourt', 07700900700, '1970-04-04',"123456"),
+(NULL,'Efyah', 'Bonsu', '2 Kiki Close', 'Accra', 07700900815, '1970-05-05',"123456"),
+(NULL,'Efyah', 'Bonsu', '2 Kiki Close', 'Accra', 07700900580, '1970-06-06',"123456"),
+(NULL,'Mekhai', 'Sun', '78 Holder Street', 'Glasgow', 07700900287, '1970-07-07',"123456"),
+(NULL,'Abigail', 'Gordon', '1 Pluck Drive', 'Newcastle', 07700900497, '1970-08-08',"123456"),
+(NULL,'Abigail', 'Gordon', '1 Pluck Drive', 'Newcastle', 07700900131, '1970-09-09',"123456"),
+(NULL,'Iris', 'Valadas', '18 Score Road', 'London', 07700900818, '1970-10-10',"123456"),
+(NULL,'Charlotte', 'Diamond', '67 Range Road', 'Manchester', 07700900619, '1970-11-11',"123456"),
+(NULL,'Gabriela', 'Rangel', '23 Cranham Gardens', 'Birmingham', 07700900728, '1970-12-12',"123456");
 
 CREATE TABLE Account_type (
     account_type_id INT NOT NULL,
@@ -43,7 +44,6 @@ CREATE TABLE Account_type (
 
 CREATE TABLE Accounts (
     account_id INT NOT NULL,
-    customer_ref INT NOT NULL,
     account_balance FLOAT DEFAULT NULL,
     overdraft_amount FLOAT DEFAULT NULL,
     account_type_id INT NOT NULL,
@@ -52,23 +52,23 @@ CREATE TABLE Accounts (
         REFERENCES account_type (account_type_id)
 );
 
- INSERT INTO Accounts(account_id, customer_ref, account_balance, overdraft_amount, account_type_id)
+ INSERT INTO Accounts(account_id, account_balance, overdraft_amount, account_type_id)
  VALUES
-(223344, 9091, 5000, 2000, 2),
-(223355, 9065, 6500, 2000, 2),
-(446688, 6690, 20000, 0, 1),
-(334466, 9876, 2000, 5000,2),
-(334477, 9212, 1000, 4000,2),
-(220055, 9342, 20000, 3000,2),
-(443399, 6623, 10000, 0,1),
-(446699, 6670, 1500, 0,1),
-(223300, 9438, 2500, 100,2),
-(337788, 9360, 2500, 2000,2),
-(223311, 9195, 2000, 1700,2),
-(333377, 9958, 3700, 3000,2);
+(20001, 5000, 2000, 2),
+(20002, 6500, 2000, 2),
+(20003, 20000, 0, 1),
+(20004, 2000, 5000, 2),
+(20005, 1000, 4000, 2),
+(20006, 20000, 3000, 2),
+(20007, 10000, 0, 1),
+(20008, 1500, 0, 1),
+(20009, 2500, 100, 2),
+(20010, 2500, 2000, 2),
+(20011, 2000, 1700, 2),
+(20012, 3700, 3000, 2);
 
 CREATE TABLE trandetails (
-    tnumber VARCHAR(6),
+    tnumber INT AUTO_INCREMENT,
     account_id INT NOT NULL,
     dot DATE,
     transaction_type VARCHAR(20),
@@ -78,15 +78,17 @@ CREATE TABLE trandetails (
         REFERENCES Accounts (account_id)
 );
 
-INSERT INTO trandetails VALUES('T00001',223344,'2013-01-01','Deposit',2000);
-INSERT INTO trandetails VALUES('T00002',223355,'2013-02-01','Withdrawal',1000);
-INSERT INTO trandetails VALUES('T00003',446688,'2013-01-01','Deposit',2000);
-INSERT INTO trandetails VALUES('T00004',334466,'2013-02-01','Deposit',3000);
-INSERT INTO trandetails VALUES('T00005',334477,'2013-01-11','Deposit',7000);
-INSERT INTO trandetails VALUES('T00006',220055,'2013-01-13','Deposit',9000);
-INSERT INTO trandetails VALUES('T00007',443399,'2013-03-13','Deposit',4000);
-INSERT INTO trandetails VALUES('T00008',446699,'2013-03-14','Deposit',3000);
-INSERT INTO trandetails VALUES('T00009',223300,'2013-03-21','Withdrawal',9000);
-INSERT INTO trandetails VALUES('T00010',337788,'2013-03-22','Withdrawal',2000);
-INSERT INTO trandetails VALUES('T00011',223311,'2013-03-25','Withdrawal',7000);
-INSERT INTO trandetails VALUES('T00012',333377,'2013-03-26','Withdrawal',2000);
+INSERT INTO trandetails VALUES(null,20001,'2013-01-01','Deposit',2000);
+INSERT INTO trandetails VALUES(null,20002,'2013-02-01','Withdrawal',1000);
+INSERT INTO trandetails VALUES(null,20003,'2013-01-01','Deposit',2000);
+INSERT INTO trandetails VALUES(null,20004,'2013-02-01','Deposit',3000);
+INSERT INTO trandetails VALUES(null,20005,'2013-01-11','Deposit',7000);
+INSERT INTO trandetails VALUES(null,20006,'2013-01-13','Deposit',9000);
+INSERT INTO trandetails VALUES(null,20007,'2013-03-13','Deposit',4000);
+INSERT INTO trandetails VALUES(null,20008,'2013-03-14','Deposit',3000);
+INSERT INTO trandetails VALUES(null,20009,'2013-03-21','Withdrawal',9000);
+INSERT INTO trandetails VALUES(null,20010,'2013-03-22','Withdrawal',2000);
+INSERT INTO trandetails VALUES(null,20011,'2013-03-25','Withdrawal',7000);
+INSERT INTO trandetails VALUES(null,20012,'2013-03-26','Withdrawal',2000);
+
+CREATE TRIGGER create_account AFTER INSERT ON customer_details FOR EACH ROW INSERT INTO accounts Values((select max(account_id) from customer_details), null, null, 1);
