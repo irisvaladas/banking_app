@@ -5,33 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
     <div class="navbar">
-        <img src="">
+        <div>BANK</div>
         <div>
-            <a class="loginherebtn" href="{{ url_for('login')}}"><input type="submit" class="navlogin" value="Log in"></a>
+            <a class="aLogin" href="{{ url_for('login')}}"><input type="submit" class="navlogin" value="Log in"></a>
         </div>
     </div>
-    <div class="resgisterform">
-        <form action="{{ url_for('registration')}}" method="post" autocomplete="off">
-            <div class="msg">{{ msg }}</div>
-            <input type="text" name="account_first_name" placeholder="First Name" class="textbox" required>
-            <input type="text" name="account_last_name" placeholder="Last Names" class="textbox" required>
-            <input type="text" name="account_holder_address" placeholder="Address" class="textbox" required>
-            <input type="text" name="account_city" placeholder="County" class="textbox" required>
-            <input type="text" name="account_holder_mobno" placeholder="Mobile Number" class="textbox" required>
-            <input type="date" name="account_holder_dob" placeholder="Date of Birth" class="textbox" required>
-            <input type="number" name="account_balance" placeholder="What will be your first deposit?" class="textbox" required>
-            <input type="text" name="overdraft_amount" placeholder="What your expected overdraft allowance?" class="textbox" required>
-            <select name="account_type" required>
-              <option value="Savings account">Savings account</option>
-              <option value="Current account">Current account</option>
-            </select>
-            <input type="password" name="password" placeholder="Password" class="textbox" required>
-            <input type="submit" class="btnupdate" value="Register">
-        </form>
-        <p class="loginpar">Already have an account? Log in <a class="loginhere" href="{{ url_for('login')}}">here</a></p>
+    <div class="content">
+        <div class="regform">
+            <form class="form" action="{{ url_for('registration')}}" method="post" autocomplete="off">
+                <div class="title">Sign up for an account</div>
+                <label class="label" for="First_name">First name:</label>
+                <input id ="First_name" type="text" name="account_first_name" placeholder="First Name" class="textbox" required>
+                <label class="label" for="last_names">Last names</label>
+                <input id ="last_names" type="text" name="account_last_names" placeholder="Last Names" class="textbox" required>
+                <label class="label" for="address">Address</label>
+                <input id ="address" type="text" name="account_holder_address" placeholder="Address" class="textbox" required>
+                <label class="label" for="city">City</label>
+                <input id ="city" type="text" name="account_city" placeholder="County" class="textbox" required>
+                <label class="label" for="mob">Mobile number</label>
+                <input id ="mob" type="text" name="account_holder_mobno" placeholder="Mobile Number" class="textbox" required>
+                <label class="label" for="dob">Date of birth</label>
+                <input id ="dob" type="date" name="account_holder_dob" placeholder="Date of Birth" class="textbox" required>
+                <label class="label" for="dep">What will it be your first deposit?</label>
+                <input id ="dep" type="number" name="account_balance" class="textbox" required>
+                <label class="label" for="od">What is your expected overdraft allowance?</label>
+                <input id ="od" type="text" name="overdraft_amount" class="textbox" required>
+                <label class="label" for="type">Account type</label>
+                <select id ="type" name="account_type" required>
+                <option value="Savings account">Savings account</option>
+                <option value="Current account">Current account</option>
+                </select>
+                <label class="label" for="pass">Password</label>
+                <input id ="pass" type="password" name="password" placeholder="Password" class="textbox" required>
+                <div class="logcont">    
+                    <input type="submit" class="btnregister" value="Register">
+                </div>
+            </form>
+            <p class="registerq">Already have an account? Log in <a class="loginhere" href="{{ url_for('login')}}">here</a></p>
+        </div>
     </div>
 </body>
 </html>
