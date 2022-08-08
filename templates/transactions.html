@@ -17,8 +17,8 @@
 <div class="transactions">
     <h1>Transactions</h1>
     <form action="{{ url_for('select_transactions')}}" method="post" autocomplete="off">
-        <input type="text" name="date_from" placeholder="e.g 2022-01-01" >
-        <input type="text" name="date_to" placeholder="e.g 2022-01-30" >
+        <input type="date" name="date_from" placeholder="e.g 2022-01-01" >
+        <input type="date" name="date_to" placeholder="e.g 2022-01-30" >
         <input type="Submit" class="trslogin" value="Search">
     </form>
     <div class="litrans">
