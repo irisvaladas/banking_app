@@ -218,4 +218,73 @@ input[type=text],input[type=number],input[type=date],input[type=password], selec
     font-family: "Arial";
     font-size:10px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
+
+.opcont {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:60%;
+    height:100%;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.balance {
+    margin:20px;
+    font-family: "Arial";
+    font-weight: 700;
+    font-size:20px;
+}
+
+.balance span{
+    color:#4558FF;
+    font-size:10px;
+    text-align:center;
+}
+
+.exform p{
+    font-family: "Arial";
+    font-size:13px;
+}
+
+#currency {
+    width: 60px !important;
+    padding: 3px 3px !important;
+    font-size: 12px;
+}
+
+.exchange {
+    padding: 5px 20px;
+    background: #0092E4;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 39px;
+    border: 0px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10px;
+    color: #ffffff;
+    transition: 0.3s
+}
+
+.ul_options {
+    list-style-type: none;
+    height: 600px;
+    margin-top:20px;
+
+}
+.ul_options li{
+    margin-bottom:10px;
+    font-family: "Arial";
+    font-weight: 600;
+}
+
+.ul_options li a{
+    text-decoration: none;
+}
+
