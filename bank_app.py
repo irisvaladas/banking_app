@@ -72,9 +72,10 @@ def update():
 
 @app.route('/options')
 def options():
+    username = Account().db_get_customer_info(session['account_id'][0]['account_id'])
     account_balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
     currencies = requests.get("http://api.frankfurter.app/currencies").json()
-    return render_template('options.html', account_balance=account_balance, currencies=currencies)
+    return render_template('options.html', account_balance=account_balance, currencies=currencies, username=username)
 
 @app.route('/customer_details')
 def details():
@@ -141,10 +142,11 @@ def currency_exchange():
     if 'loggedin' in session:
         if request.method == "POST":
             currency=request.form["currency"]
+            username = Account().db_get_customer_info(session['account_id'][0]['account_id'])
             account_balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
             value = Bank().balance_currency_exchange(currency,session['account_id'][0]['account_id'])
             currencies = requests.get("http://api.frankfurter.app/currencies").json()
-            return render_template('options.html', value=value, currencies=currencies, currency=currency, account_balance=account_balance)
+            return render_template('options.html', value=value, currencies=currencies, currency=currency, account_balance=account_balance, username=username)
     return render_template('index.html')
 
 
