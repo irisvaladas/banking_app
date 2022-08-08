@@ -21,7 +21,6 @@ def login():
         account_id = request.form['account_id']
         password = request.form['password']
         record = Account().db_customer_login((account_id, password))
-        print(record)
         if record:
             session['loggedin'] = True
             session['account_id'] = record
