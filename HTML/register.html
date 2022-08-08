@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="navbar">
+        <img src="">
+        <div>
+            <a class="loginherebtn" href="{{ url_for('login')}}"><input type="submit" class="navlogin" value="Log in"></a>
+        </div>
+    </div>
+    <div class="resgisterform">
+        <form action="{{ url_for('register')}}" method="post" autocomplete="off">
+            <div class="msg">{{ msg }}</div>
+            <input type="text" name="username" placeholder="Enter Your Username" class="textbox" id="username" required>
+            <input type="password" name="password" placeholder="Enter Your Password" class="textbox" id="password" required>
+            <input type="email" name="email" placeholder="Enter Your Email ID" class="textbox" id="email" required>
+            <input type="text" name="address" placeholder="Enter Your Address" class="textbox" id="address" required>
+            <input type="text" name="city" placeholder="Enter Your City" class="textbox" id="city" required>
+            <input type="text" name="state" placeholder="Enter Your State" class="textbox" id="state" required>
+            <input type="text" name="country" placeholder="Enter Your Country" class="textbox" id="country" required>
+            <input type="text" name="postalcode" placeholder="Enter Your Postal Code" class="textbox" id="postalcode" required>
+            <input type="submit" class="btn" value="Register">
+        </form>
+        <p class="loginpar">Already have an account? Log in <a class="loginhere" href="{{ url_for('login')}}">here</a></p>
+    </div>
+</body>
+</html>
