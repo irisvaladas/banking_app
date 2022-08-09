@@ -108,7 +108,7 @@ class Account(Database):
             return result
 
     def delete_account(self, data):
-        query = """Delete from Customer_details where account_id = %s 
+        query = """Delete from Customer_details where account_id = %s and password = %s
         """
         try:
             cur.execute(query, data)

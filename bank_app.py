@@ -52,7 +52,6 @@ def registration():
         Account().db_create_customer(
             (fname, lname, address, city, mobno, dob, password))
         gen_id = Account().db_get_generated_id()['max(account_id)']
-        print(gen_id)
         Account().db_create_account((balance,overdraft,account_type,gen_id))
         return render_template('index.html')
 
@@ -148,6 +147,22 @@ def currency_exchange():
             currencies = requests.get("http://api.frankfurter.app/currencies").json()
             return render_template('options.html', value=value, currencies=currencies, currency=currency, account_balance=account_balance, username=username)
     return render_template('index.html')
+
+@app.route('/delete_account', methods=['GET','POST'])
+def delete_account():
+    if "loggedin" in session:
+        if request.method == "POST":
+            account_id = request.form['account_id']
+            password = request.form['password']
+            record = Account().db_customer_login((account_id, password))
+            if record:
+                Account().delete_account((account_id, password))
+                return redirect(url_for('index'))
+            else:
+                msg = 'Incorrect account number/ password. Try again!'
+            return render_template('delete_account.html', msg=msg)
+    return render_template('delete_account.html')
+
 
 @app.route('/delete')
 def delete():
