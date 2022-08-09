@@ -149,11 +149,10 @@ def currency_exchange():
             return render_template('options.html', value=value, currencies=currencies, currency=currency, account_balance=account_balance, username=username)
     return render_template('index.html')
 
-
-
 @app.route('/delete')
 def delete():
-    return render_template('index.html')
+    if "loggedin"
+    return render_template('delete_account.html')
 
 
 @app.route('/logout')

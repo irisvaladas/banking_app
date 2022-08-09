@@ -5,24 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-<div class="navbar">
-    <img src="">
-    <div>
-        <a class="logoutbtn" href="{{ url_for('logout')}}"><input type="submit" class="navlogout"
-                                                                       value="Log out"></a>
+    <div class="navbar">
+        <div>BANK</div>
+        <div>
+            <a class="aLogin" href="{{ url_for('logout')}}"><input type="submit" class="navlogin"                                                             value="Log out"></a>
+        </div>
     </div>
-</div>
 <div class="transactions">
     <h1>Transactions</h1>
-    <form action="{{ url_for('select_transactions')}}" method="post" autocomplete="off">
-        <input type="date" name="date_from" placeholder="e.g 2022-01-01" >
-        <input type="date" name="date_to" placeholder="e.g 2022-01-30" >
-        <input type="Submit" class="trslogin" value="Search">
+    <form action="{{ url_for('select_transactions')}}" method="post" autocomplete="off" class="transactions-form">
+        <input type="date" name="date_from" placeholder="e.g 2022-01-01">
+        <input type="date" name="date_to" placeholder="e.g 2022-01-30">
+        <input type="Submit" class="navlogin" value="Search" >
     </form>
-    <div class="litrans">
-        <table>
+    <div >
+        <table class="litrans">
             <tr>
                 <th>Date</th>
                 <th>Income/Outcome</th>

@@ -5,22 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
 <div class="navbar">
-    <img src="">
+    <div>BANK</div>
     <div>
-        <a class="logoutbtn" href="{{ url_for('logout')}}"><input type="submit" class="navlogout"
-                                                                       value="Log out"></a>
+        <a class="aLogin" href="{{ url_for('logout')}}"><input type="submit" class="navlogin" value="Log out"></a>
     </div>
 </div>
-<div class="withdraw">
+<div class="deposit">
     <h1>Withdraw</h1>
     <p>Current balance {{ balance }}</p>
     <p> How much would you like to withdraw ? </p>
-    <form action="{{ url_for('make_withdrawal')}}" method="post" autocomplete="off">
+    <form action="{{ url_for('make_withdrawal')}}" class="deposit_form" method="post" autocomplete="off">
         <input type="number" name="withdraw" value="0" required>
-        <input type="Submit" class="withdrawbtn" value="Withdraw">
+        <input type="Submit" class="navlogin" value="Withdraw">
     </form>
 </div>
 </body>

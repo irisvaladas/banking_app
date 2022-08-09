@@ -288,3 +288,157 @@ input[type=text],input[type=number],input[type=date],input[type=password], selec
     text-decoration: none;
 }
 
+.contentbar {
+    display:flex;
+    align-items: center;
+    height:80%;
+    flex-direction: column;
+    padding-top: 50px;
+}
+
+.contentbar h1 {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color:rgb(22, 65, 255);
+    margin:20px;
+}
+
+.details tr td{
+    padding:10px;
+    font-family: 'Arial';
+    font-size: 20px;
+}
+
+.details tr td:first-child{
+    font-weight: 700;
+}
+
+.showdetails {
+    margin-bottom:20px
+}
+
+.transactions {
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    padding:50px;
+}
+
+.transactions h1 {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color:rgb(22, 65, 255);
+    margin:20px;
+}
+
+.transactions-form{
+    display:block;
+    width:200px;
+    text-align:center;
+}
+
+.transactions-form .navlogin {
+    display:block;
+    width:100%;
+    text-align:center;
+}
+
+.litrans tr td{
+    padding:10px;
+    font-family: 'Arial';
+    font-size: 20px;
+}
+
+.litrans tr td:first-child{
+    font-weight: 700;
+}
+
+.litrans th{
+    padding:10px;
+    font-family: 'Arial';
+    font-size: 20px;
+}
+
+.deposit h1{
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color:rgb(22, 65, 255);
+    margin:20px;
+}
+
+.deposit p{
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 30px;
+    color:rgb(0, 0, 0);
+}
+
+.deposit {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.deposit_form .navlogin {
+    display:block;
+    width:100%;
+    text-align:center;
+}
+
+.updateform {
+    display:flex;
+    justify-content:center;
+    width:100%;
+}
+
+.updateform form{
+    padding-top: 20px;
+    display:flex;
+    justify-content:center;
+    flex-direction: column;
+    width:50%;
+}
+
+.updateform .navlogin{
+    display:block;
+    width:100%;
+    text-align:center;
+}
+
+.form h1{
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 30px;
+    color:rgb(0, 0, 0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
