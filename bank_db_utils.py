@@ -31,10 +31,9 @@ class Account(Database):
         try:
             cur.execute(query)
             result = cur.fetchone()  # this is a list with db records where each record is a tuple
+            return result
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
-        finally:
-            return result
 
     def db_customer_login(self, data):
         result = ""
@@ -48,10 +47,9 @@ class Account(Database):
         try:
             cur.execute(query,data)
             result = cur.fetchall()  # this is a list with db records where each record is a tuple
+            return result
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
-        finally:
-            return result
 
     def db_update_costumer_account(self, data):
         query = """
@@ -81,10 +79,9 @@ class Account(Database):
         try:
             cur.execute(query)  # this is a list with db records where each record is a tuple
             result=cur.fetchone()
+            return result
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
-        finally:
-            return result
 
     def db_create_account(self, data):
         query = """Update accounts set account_balance = %s, 
@@ -102,10 +99,10 @@ class Account(Database):
         try:
             cur.execute(query)
             result = cur.fetchone()  # this is a list with db records where each record is a tuple
+            return result
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
-        finally:
-            return result
+
 
     def delete_account(self, data):
         query = """Delete from Customer_details where account_id = %s and password = %s
@@ -127,10 +124,10 @@ class Transactions(Account):
         try:
             cur.execute(query,data)
             result = cur.fetchall()  # this is a list with db records where each record is a tuple
+            return result
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
-        finally:
-            return result
+
 
     def withdraw(self, data):
         query = """update accounts set account_balance = ((select account_balance where account_id = %s) - %s) 
