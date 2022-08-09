@@ -107,6 +107,15 @@ class Account(Database):
         finally:
             return result
 
+    def delete_account(self, data):
+        query = """Delete from Customer_details where account_id = %s 
+        """
+        try:
+            cur.execute(query, data)
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
 
 class Transactions(Account):
     def db_get_customer_transactions(self, data):

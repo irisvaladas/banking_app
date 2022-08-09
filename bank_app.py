@@ -36,7 +36,7 @@ def register():
 def registration():
     if request.method == 'POST':
         fname = request.form["account_first_name"]
-        lname = request.form["account_last_name"]
+        lname = request.form["account_last_names"]
         address = request.form["account_holder_address"]
         city = request.form["account_city"]
         mobno = request.form["account_holder_mobno"]
@@ -54,7 +54,7 @@ def registration():
         gen_id = Account().db_get_generated_id()['max(account_id)']
         print(gen_id)
         Account().db_create_account((balance,overdraft,account_type,gen_id))
-    return render_template('index.html')
+        return render_template('index.html')
 
 @app.route('/update', methods = ['GET','POST'])
 def update():
@@ -149,11 +149,9 @@ def currency_exchange():
             return render_template('options.html', value=value, currencies=currencies, currency=currency, account_balance=account_balance, username=username)
     return render_template('index.html')
 
-
-
 @app.route('/delete')
 def delete():
-    return render_template('index.html')
+    return render_template('delete_account.html')
 
 
 @app.route('/logout')
