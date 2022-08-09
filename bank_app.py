@@ -2,8 +2,6 @@ from flask import Flask, request, render_template, redirect, url_for, session
 from bank_db_utils import Account, Transactions, Bank
 from datetime import datetime
 import requests
-import json
-from dateutil.relativedelta import relativedelta
 
 app = Flask(__name__)
 
@@ -46,7 +44,7 @@ def registration():
         account_type = request.form["account_type"]
         if account_type=="Savings account":
             account_type=1
-        elif account_type=="Savings account":
+        elif account_type=="Current account":
             account_type=2
         password = request.form["password"]
         Account().db_create_customer(
