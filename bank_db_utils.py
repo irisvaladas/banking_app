@@ -166,5 +166,3 @@ class Bank(Account):
         result = requests.get(
             f"https://api.frankfurter.app/latest?amount={balance}&from={from_currency}&to={to_currency}")
         return result.json()['rates'][to_currency]
-
-print(Bank().balance_currency_exchange("EUR",20001))
