@@ -211,13 +211,10 @@ class Bank(Account):
         result = requests.get(
             f"https://api.frankfurter.app/latest?amount={balance}&from={from_currency}&to={to_currency}")
         return result.json()['rates'][to_currency]
-<<<<<<< HEAD
-=======
 
     def get_total_spent(self, dict):
         withdrawal_values = [d['transaction_amount'] for d in dict if d['transaction_type'] == 'Withdrawal']
         withdrawal_total = (itertools.accumulate(withdrawal_values))
         return list(withdrawal_total)
 
-# Transactions().withdraw((20001,100,20001))
->>>>>>> iris
+
