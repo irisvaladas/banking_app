@@ -110,6 +110,15 @@ class Account(Database):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
 
+    def overdraft_amount(self, account_id):
+        result = ""
+        query = f"SELECT overdraft_amount from accounts where account_id = {account_id};"
+        try:
+            cur.execute(query)
+            result = cur.fetchone()  # this is a list with db records where each record is a tuple
+            return result
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
 
     def delete_account(self, data):
         query = """Delete from Customer_details where account_id = %s and password = %s
@@ -207,3 +216,5 @@ class Bank(Account):
         withdrawal_values = [d['transaction_amount'] for d in dict if d['transaction_type'] == 'Withdrawal']
         withdrawal_total = (itertools.accumulate(withdrawal_values))
         return list(withdrawal_total)
+
+# Transactions().withdraw((20001,100,20001))

@@ -63,9 +63,10 @@ def registration():
         if password_check:
             Account().db_create_customer(
                 (fname, lname, address, city, mobno, dob, password))
-            gen_id = f"Your account ID is {Account().db_get_generated_id()['max(account_id)']}, please save it somewhere safe."
+            gen_id_msg = f"Your account ID is {Account().db_get_generated_id()['max(account_id)']}, please save it somewhere safe."
+            gen_id = Account().db_get_generated_id()['max(account_id)']
             Account().db_create_account((balance, overdraft, account_type, gen_id))
-            return render_template('register.html', gen_id=gen_id)
+            return render_template('register.html', gen_id=gen_id_msg)
     return password_ver(password)
 
 
@@ -153,18 +154,24 @@ def make_withdrawal():
     if 'loggedin' in session:
         amount = int(request.form['withdraw'])
         msg = ""
+        balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
         def check_amount(num):
-            if num <= 0:
+            balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+            if num <= 0 and balance > num:
                 msg = "Please insert amount greater than 0."
                 balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
                 return render_template('withdraw.html', account_id=session['account_id'], msg=msg, balance=balance)
-            elif num > 0:
+            elif num > 0 and balance > num:
                 Transactions().withdraw((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
                 Transactions().update_transactions((0,session['account_id'][0]['account_id'],datetime.today().strftime('%Y-%m-%d'), 'Withdrawal', amount ))
                 balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
-                code = Transactions().withdraw((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
+                code = Transactions().withdraw((session['account_id'][0]['account_id'], 0, session['account_id'][0]['account_id']))
                 msg = f"To get your money please insert this code: {code} into the ATM"
                 return render_template('withdraw.html', balance=balance, msg = msg)
+            elif balance < num:
+                msg = f"You don't have enough money to complete this transaction"
+                return render_template('withdraw.html', balance=balance, msg=msg)
+            return render_template('withdraw.html', balance=balance)
         return check_amount(amount)
     return render_template('index.html')
 
