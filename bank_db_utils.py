@@ -217,4 +217,4 @@ class Bank(Account):
         withdrawal_total = (itertools.accumulate(withdrawal_values))
         return list(withdrawal_total)
 
-# Transactions().withdraw((20001,100,20001))
+
