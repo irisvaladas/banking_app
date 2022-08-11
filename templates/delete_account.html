@@ -9,14 +9,14 @@
 </head>
 <body>
     <div class="navbar">
-        <div>BANK</div>
+        <div class="home"><a href="{{ url_for('options')}}">BANK</a></div>
         <div>
             <a class="aLogin" href="{{ url_for('logout')}}"><input type="submit" class="navlogin"                                                             value="Log out"></a>
         </div>
     </div>
 <div class="updateform">
     <form action="{{ url_for('delete_account')}}" method="post" autocomplete="off" class="form">
-        <h1>Are you sure you want to delete your account? Please confirm your password to confirm:</h1>
+        <h1>Are you sure you want to delete your account? Please onsert your account ID and password to confirm:</h1>
         <input  class="input" id="account_id" type="text" name="account_id" placeholder="Account number">
         <input class="input" id="password" type="password" name="password" placeholder="Password">
         <div>{{ msg }}</div>
