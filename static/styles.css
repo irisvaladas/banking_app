@@ -365,6 +365,16 @@ input[type=text],input[type=number],input[type=date],input[type=password], selec
     font-size: 20px;
 }
 
+.table h5 {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color:rgb(22, 65, 255);
+    margin:20px;
+}
+
 .deposit h1{
     font-family: 'Arial';
     font-style: normal;
@@ -397,9 +407,20 @@ input[type=text],input[type=number],input[type=date],input[type=password], selec
     text-align:center;
 }
 
+.deposit_form div {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 30px;
+    color:rgb(0, 0, 0);
+}
+
 .updateform {
     display:flex;
     justify-content:center;
+    align-items:center;
+    flex-direction:column;
     width:100%;
 }
 
@@ -426,14 +447,24 @@ input[type=text],input[type=number],input[type=date],input[type=password], selec
     color:rgb(0, 0, 0);
 }
 
+.gen_id {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 30px;
+    color:rgb(0, 0, 0);
+}
 
+.home a:link {
+  text-decoration: none;
+  color:white
+}
 
-
-
-
-
-
-
+.home a:visited {
+  text-decoration: none;
+  color:white
+}
 
 
 

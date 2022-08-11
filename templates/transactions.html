@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="navbar">
-        <div>BANK</div>
+        <div class="home"><a href="{{ url_for('options')}}">BANK</a></div>
         <div>
             <a class="aLogin" href="{{ url_for('logout')}}"><input type="submit" class="navlogin"                                                             value="Log out"></a>
         </div>
@@ -21,7 +21,8 @@
         <input type="date" name="date_to" placeholder="e.g 2022-01-30">
         <input type="Submit" class="navlogin" value="Search" >
     </form>
-    <div >
+    <div class="table">
+        <h5>{{ total_spent }}</h5>
         <table class="litrans">
             <tr>
                 <th>Date</th>

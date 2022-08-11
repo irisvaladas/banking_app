@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="navbar">
-        <div>BANK</div>
+        <div class="home"><a href="{{ url_for('login')}}">BANK</a></div>
         <div>
             <a class="aLogin" href="{{ url_for('login')}}"><input type="submit" class="navlogin" value="Log in"></a>
         </div>
@@ -17,6 +17,7 @@
     <div class="content">
         <div class="regform">
             <form class="form" action="{{ url_for('registration')}}" method="post" autocomplete="off">
+                <div class="gen_id">{{ gen_id }}</div>
                 <div class="title">Sign up for an account</div>
                 <label class="label" for="First_name">First name:</label>
                 <input id ="First_name" type="text" name="account_first_name" placeholder="First Name" class="textbox" required>
@@ -44,6 +45,8 @@
                 <div class="logcont">    
                     <input type="submit" class="btnregister" value="Register">
                 </div>
+                <div class="gen_id">{{ msg }}</div>
+
             </form>
             <p class="registerq">Already have an account? Log in <a class="loginhere" href="{{ url_for('login')}}">here</a></p>
         </div>

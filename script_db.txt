@@ -16,18 +16,18 @@ ALTER TABLE Customer_details AUTO_INCREMENT=20001;
 
 INSERT INTO Customer_details(account_id, account_first_name, account_last_name, account_holder_address, account_city, account_holder_mobno, account_holder_dob, password)
 VALUES
-(NULL,'Camille', 'Downie', '78, Holder Street', 'Glasgow', 07700900129, '1950-01-01',"123456"),
-(NULL,'Chenelle', 'Brown', '34 Comer Road', 'Cardiff', 07700900800, '1960-02-02',"123456"),
-(NULL,'Shania', 'Smith', '5 Downing Drive', 'London', 07700900716, '1970-03-03',"123456"),
-(NULL,'Tolu', 'Ademola', '90 Dolphin Road', 'Port Harcourt', 07700900700, '1970-04-04',"123456"),
-(NULL,'Efyah', 'Bonsu', '2 Kiki Close', 'Accra', 07700900815, '1970-05-05',"123456"),
-(NULL,'Efyah', 'Bonsu', '2 Kiki Close', 'Accra', 07700900580, '1970-06-06',"123456"),
-(NULL,'Mekhai', 'Sun', '78 Holder Street', 'Glasgow', 07700900287, '1970-07-07',"123456"),
-(NULL,'Abigail', 'Gordon', '1 Pluck Drive', 'Newcastle', 07700900497, '1970-08-08',"123456"),
-(NULL,'Abigail', 'Gordon', '1 Pluck Drive', 'Newcastle', 07700900131, '1970-09-09',"123456"),
-(NULL,'Iris', 'Valadas', '18 Score Road', 'London', 07700900818, '1970-10-10',"123456"),
-(NULL,'Charlotte', 'Diamond', '67 Range Road', 'Manchester', 07700900619, '1970-11-11',"123456"),
-(NULL,'Gabriela', 'Rangel', '23 Cranham Gardens', 'Birmingham', 07700900728, '1970-12-12',"123456");
+(NULL,'Camille', 'Downie', '78, Holder Street', 'Glasgow', 07700900129, '1950-01-01',"isRx$^6L8*3*#"),
+(NULL,'Chenelle', 'Brown', '34 Comer Road', 'Cardiff', 07700900800, '1960-02-02',"G&n0S&^A68UC#"),
+(NULL,'Shania', 'Smith', '5 Downing Drive', 'London', 07700900716, '1970-03-03',"M58n4U%KpNko#"),
+(NULL,'Tolu', 'Ademola', '90 Dolphin Road', 'Port Harcourt', 07700900700, '1970-04-04',"0O4Oz9aU*2pF"),
+(NULL,'Efyah', 'Bonsu', '2 Kiki Close', 'Accra', 07700900815, '1970-05-05',"C4%2e94nC6bz"),
+(NULL,'Efyah', 'Bonsu', '2 Kiki Close', 'Accra', 07700900580, '1970-06-06',"5X4G559@hOll"),
+(NULL,'Mekhai', 'Sun', '78 Holder Street', 'Glasgow', 07700900287, '1970-07-07',"vknJN862RF#O"),
+(NULL,'Abigail', 'Gordon', '1 Pluck Drive', 'Newcastle', 07700900497, '1970-08-08',"rVr5RR678*vO#x"),
+(NULL,'Abigail', 'Gordon', '1 Pluck Drive', 'Newcastle', 07700900131, '1970-09-09',"xWUi#2^05%*r"),
+(NULL,'Iris', 'Valadas', '18 Score Road', 'London', 07700900818, '1970-10-10',"7349a0DC%@kD"),
+(NULL,'Charlotte', 'Diamond', '67 Range Road', 'Manchester', 07700900619, '1970-11-11',"oTN1g9%@7Tm6#"),
+(NULL,'Gabriela', 'Rangel', '23 Cranham Gardens', 'Birmingham', 07700900728, '1970-12-12',"tlH@%OG9p56%");
 
 CREATE TABLE Account_type (
     account_type_id INT NOT NULL,
@@ -91,4 +91,4 @@ INSERT INTO trandetails VALUES(null,20010,'2013-03-22','Withdrawal',2000);
 INSERT INTO trandetails VALUES(null,20011,'2013-03-25','Withdrawal',7000);
 INSERT INTO trandetails VALUES(null,20012,'2013-03-26','Withdrawal',2000);
 
-CREATE TRIGGER create_account AFTER INSERT ON customer_details FOR EACH ROW INSERT INTO accounts Values((select max(account_id) from customer_details), null, null, 1);
+CREATE TRIGGER create_account AFTER INSERT ON customer_details FOR EACH ROW INSERT INTO accounts Values((select max(account_id) from customer_details), null, null, 1); null, null, 1);

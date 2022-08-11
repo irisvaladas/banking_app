@@ -1,11 +1,18 @@
+import uuid
 import mysql.connector
 from config import USER, PASSWORD, HOST
 import requests
-
+import itertools
 
 class DbConnectionError(Exception):
     pass
 
+def get_unique_id(func):
+    def wrapper(*args, **kwargs):
+        func(*args, **kwargs)
+        key = str(uuid.uuid4().int & (1 << 64)-1)
+        return key
+    return wrapper
 class Database:
     cnx = cur = None
 
@@ -103,6 +110,15 @@ class Account(Database):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
 
+    def overdraft_amount(self, account_id):
+        result = ""
+        query = f"SELECT overdraft_amount from accounts where account_id = {account_id};"
+        try:
+            cur.execute(query)
+            result = cur.fetchone()  # this is a list with db records where each record is a tuple
+            return result
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
 
     def delete_account(self, data):
         query = """Delete from Customer_details where account_id = %s and password = %s
@@ -112,6 +128,36 @@ class Account(Database):
             cnx.commit()
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
+
+    def password_check(self, passwd):
+        SpecialSym = ['$', '@', '#', '%']
+        val = True
+        #
+        if len(passwd) < 6:
+            # print('length should be at least 6')
+            val = False
+
+        if len(passwd) > 20:
+            # print('length should be not be greater than 8')
+            val = False
+
+        if not any(char.isdigit() for char in passwd):
+            # print('Password should have at least one numeral')
+            val = False
+
+        if not any(char.isupper() for char in passwd):
+            # print('Password should have at least one uppercase letter')
+            val = False
+
+        if not any(char.islower() for char in passwd):
+            # print('Password should have at least one lowercase letter')
+            val = False
+
+        if not any(char in SpecialSym for char in passwd):
+            # print('Password should have at least one of the symbols $@#')
+            val = False
+        if val:
+            return val
 
 
 class Transactions(Account):
@@ -128,7 +174,7 @@ class Transactions(Account):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
 
-
+    @get_unique_id
     def withdraw(self, data):
         query = """update accounts set account_balance = ((select account_balance where account_id = %s) - %s) 
                    where account_id = %s;"""
@@ -138,7 +184,6 @@ class Transactions(Account):
                 cnx.commit()
             except Exception:
                 raise DbConnectionError("Failed to read data from DB")
-
 
     def deposit(self, data):
         query = """update accounts set account_balance = ((select account_balance where account_id = %s) + %s) 
@@ -166,3 +211,13 @@ class Bank(Account):
         result = requests.get(
             f"https://api.frankfurter.app/latest?amount={balance}&from={from_currency}&to={to_currency}")
         return result.json()['rates'][to_currency]
+<<<<<<< HEAD
+=======
+
+    def get_total_spent(self, dict):
+        withdrawal_values = [d['transaction_amount'] for d in dict if d['transaction_type'] == 'Withdrawal']
+        withdrawal_total = (itertools.accumulate(withdrawal_values))
+        return list(withdrawal_total)
+
+# Transactions().withdraw((20001,100,20001))
+>>>>>>> iris

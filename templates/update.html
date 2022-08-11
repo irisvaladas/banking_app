@@ -9,22 +9,25 @@
 </head>
 <body>
     <div class="navbar">
-        <div>BANK</div>
+        <div class="home"><a href="{{ url_for('options')}}">BANK</a></div>
         <div>
             <a class="aLogin" href="{{ url_for('logout')}}"><input type="submit" class="navlogin"                                                             value="Log out"></a>
         </div>
     </div>
 <div class="updateform">
-    <form action="{{ url_for('update')}}" method="post" autocomplete="on">
+    <div class="gen_id">{{ confirmation }}</div>
+    <form action="{{ url_for('update_details')}}" method="post" autocomplete="on">
         <input type="text" name="account_first_name" placeholder="First Name" class="textbox" required>
-        <input type="text" name="account_last_name" placeholder="Last Names" class="textbox" required>
+        <input type="text" name="account_last_names" placeholder="Last Names" class="textbox" required>
         <input type="text" name="account_holder_address" placeholder="Address" class="textbox" required>
         <input type="text" name="account_city" placeholder="County" class="textbox" required>
         <input type="text" name="account_holder_mobno" placeholder="Mobile Number" class="textbox" required>
-        <input type="text" name="account_holder_dob" placeholder="Date of Birth" class="textbox" required>
+        <input type="date" name="account_holder_dob" placeholder="Date of Birth" class="textbox" required>
         <input type="password" name="password" placeholder="Password" class="textbox" required>
         <input type="submit" class="navlogin" value="Update">
     </form>
+    <div class="gen_id">{{ msg }}</div>
+
 </div>
 </body>
 </html>
