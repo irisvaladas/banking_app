@@ -160,7 +160,8 @@ def make_withdrawal():
                 Transactions().withdraw((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
                 Transactions().update_transactions((0,session['account_id'][0]['account_id'],datetime.today().strftime('%Y-%m-%d'), 'Withdrawal', amount ))
                 balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
-                msg = "Withdrawal successful"
+                code = Transactions().withdraw((session['account_id'][0]['account_id'], amount, session['account_id'][0]['account_id']))
+                msg = f"To get your money please insert this code: {code} into the ATM"
                 return render_template('withdraw.html', balance=balance, msg = msg)
         return check_amount(amount)
     return render_template('index.html')

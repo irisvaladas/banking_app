@@ -407,6 +407,15 @@ input[type=text],input[type=number],input[type=date],input[type=password], selec
     text-align:center;
 }
 
+.deposit_form div {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 30px;
+    color:rgb(0, 0, 0);
+}
+
 .updateform {
     display:flex;
     justify-content:center;

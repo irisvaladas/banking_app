@@ -1,12 +1,18 @@
+import uuid
 import mysql.connector
 from config import USER, PASSWORD, HOST
 import requests
 import itertools
 
-
 class DbConnectionError(Exception):
     pass
 
+def get_unique_id(func):
+    def wrapper(*args, **kwargs):
+        func(*args, **kwargs)
+        key = str(uuid.uuid4().int & (1 << 64)-1)
+        return key
+    return wrapper
 class Database:
     cnx = cur = None
 
@@ -159,7 +165,7 @@ class Transactions(Account):
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
 
-
+    @get_unique_id
     def withdraw(self, data):
         query = """update accounts set account_balance = ((select account_balance where account_id = %s) - %s) 
                    where account_id = %s;"""
@@ -169,7 +175,6 @@ class Transactions(Account):
                 cnx.commit()
             except Exception:
                 raise DbConnectionError("Failed to read data from DB")
-
 
     def deposit(self, data):
         query = """update accounts set account_balance = ((select account_balance where account_id = %s) + %s) 
@@ -203,4 +208,4 @@ class Bank(Account):
         withdrawal_total = (itertools.accumulate(withdrawal_values))
         return list(withdrawal_total)
 
-print(Bank().balance_currency_exchange("EUR",20001))
+print(Transactions().withdraw((20001,100,20001)))
