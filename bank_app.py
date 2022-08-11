@@ -135,7 +135,9 @@ def select_transactions():
             date_to = request.form['date_to']
             res = Transactions().db_get_customer_transactions((session['account_id'][0]['account_id'], date_from, date_to))
             total_spent=f"You didn't spend money in this period of time"
-            if res:
+            if [d['transaction_amount'] for d in res if d['transaction_type'] == 'Withdrawal'] == []:
+                total_spent = f"You didn't spend money in this period of time"
+            elif res:
                 total_spent = f"Within this period you spent: {Bank().get_total_spent(res)[-1]} GBP"
             return render_template('transactions.html', account=res, total_spent=total_spent)
     return render_template('index.html')
