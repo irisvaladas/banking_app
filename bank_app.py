@@ -211,7 +211,10 @@ def delete_account():
             record = Account().db_customer_login((account_id, password))
             if record:
                 Account().delete_account((account_id, password))
-                return redirect(url_for('index'))
+                balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+                code = Transactions().withdraw((session['account_id'][0]['account_id'], balance, session['account_id'][0]['account_id']))
+                msg = f"We are very sorry to see you leaving. To get your money back please insert this code: {code} into the ATM"
+                return render_template('index.html', msg=msg)
             else:
                 msg = 'Incorrect account number/ password. Try again!'
             return render_template('delete_account.html', msg=msg)
