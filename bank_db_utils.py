@@ -218,3 +218,4 @@ class Bank(Account):
         return list(withdrawal_total)
 
 
+print(Account().db_get_generated_id())
