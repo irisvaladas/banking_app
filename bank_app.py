@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 app.secret_key = "super secret key"
 
+
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -15,22 +16,23 @@ def index():
 
 @app.route("/login", methods=['GET','POST'])
 def login():
-    msg=''
-    if request.method == 'POST':
-        account_id = request.form['account_id']
-        password = request.form['password']
-        record = Account().db_customer_login((account_id, password))
-        if record:
-            session['loggedin'] = True
-            session['account_id'] = record
-            return redirect(url_for('options'))
-        else:
-            msg='Incorrect account number/ password. Try again!'
+    msg = ''
+    account_id = request.form['account_id']
+    password = request.form['password']
+    record = Account().db_customer_login((account_id, password))
+    if record:
+        session['loggedin'] = True
+        session['account_id'] = record
+        return redirect(url_for('options'))
+    else:
+        msg='Incorrect account number/ password. Try again!'
     return render_template('index.html', msg=msg)
+
 
 @app.route('/register')
 def register():
     return render_template("register.html")
+
 @app.route('/registration', methods = ['GET','POST'])
 def registration():
     fname = request.form["account_first_name"]
@@ -75,6 +77,7 @@ def update():
     if 'loggedin' in session:
         return render_template("update.html")
 
+
 @app.route('/update_details', methods = ['GET','POST'])
 def update_details():
     if 'loggedin' in session:
@@ -106,6 +109,7 @@ def update_details():
         return password_ver(password)
     return render_template("index.html")
 
+
 @app.route('/options')
 def options():
     if "loggedin" in session:
@@ -116,6 +120,7 @@ def options():
         return render_template('options.html', account_balance=account_balance, currencies=currencies, username=username)
     return render_template("index.html")
 
+
 @app.route('/customer_details')
 def details():
     if 'loggedin' in session:
@@ -123,10 +128,12 @@ def details():
         return render_template("display.html", account=res)
     return render_template('index.html')
 
+
 @app.route('/transactions', methods=['GET','POST'])
 def transactions():
     if 'loggedin' in session:
         return render_template('transactions.html')
+
 
 @app.route('/select_transactions', methods=['GET','POST'])
 def select_transactions():
@@ -143,11 +150,13 @@ def select_transactions():
             return render_template('transactions.html', account=res, total_spent=total_spent)
     return render_template('index.html')
 
+
 @app.route('/withdrawal', methods=['GET','POST'])
 def withdrawal():
     if 'loggedin' in session:
         balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
         return render_template('withdraw.html', balance=balance)
+
 
 @app.route('/make_withdrawal', methods=['GET','POST'])
 def make_withdrawal():
@@ -182,6 +191,7 @@ def deposit():
         balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
         return render_template('deposit.html', balance=balance)
 
+
 @app.route('/make_deposit', methods=['GET','POST'])
 def make_deposit():
     if 'loggedin' in session:
@@ -200,6 +210,7 @@ def make_deposit():
         return check_amount(amount)
     return render_template('index.html')
 
+
 @app.route('/currency_exchange', methods=['GET','POST'])
 def currency_exchange():
     if 'loggedin' in session:
@@ -211,22 +222,22 @@ def currency_exchange():
         return render_template('options.html', value=value, currencies=currencies, currency=currency, account_balance=account_balance, username=username)
     return render_template('index.html')
 
+
 @app.route('/delete_account', methods=['GET','POST'])
 def delete_account():
     if "loggedin" in session:
-        if request.method == "POST":
-            account_id = request.form['account_id']
-            password = request.form['password']
-            record = Account().db_customer_login((account_id, password))
-            if record:
-                Account().delete_account((account_id, password))
-                balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
-                code = Transactions().withdraw((session['account_id'][0]['account_id'], balance, session['account_id'][0]['account_id']))
-                msg = f"We are very sorry to see you leaving. To get your money back please insert this code: {code} into the ATM"
-                return render_template('index.html', msg=msg)
-            else:
-                msg = 'Incorrect account number/ password. Try again!'
-            return render_template('delete_account.html', msg=msg)
+        account_id = request.form['account_id']
+        password = request.form['password']
+        record = Account().db_customer_login((account_id, password))
+        if record:
+            Account().delete_account((account_id, password))
+            balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
+            code = Transactions().withdraw((session['account_id'][0]['account_id'], balance, session['account_id'][0]['account_id']))
+            msg = f"We are very sorry to see you leaving. To get your money back please insert this code: {code} into the ATM"
+            return render_template('index.html', msg=msg)
+        else:
+            msg = 'Incorrect account number/ password. Try again!'
+        return render_template('delete_account.html', msg=msg)
     return render_template('delete_account.html')
 
 
@@ -240,6 +251,7 @@ def logout():
     session.pop('loggedin',None)
     session.pop('username',None)
     return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

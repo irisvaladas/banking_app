@@ -91,4 +91,4 @@ INSERT INTO trandetails VALUES(null,20010,'2013-03-22','Withdrawal',2000);
 INSERT INTO trandetails VALUES(null,20011,'2013-03-25','Withdrawal',7000);
 INSERT INTO trandetails VALUES(null,20012,'2013-03-26','Withdrawal',2000);
 
-CREATE TRIGGER create_account AFTER INSERT ON customer_details FOR EACH ROW INSERT INTO accounts Values((select max(account_id) from customer_details), null, null, 1); null, null, 1);
+CREATE TRIGGER create_account AFTER INSERT ON customer_details FOR EACH ROW INSERT INTO accounts Values((select max(account_id) from customer_details), null, null, 1);
