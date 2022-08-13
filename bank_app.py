@@ -250,6 +250,7 @@ def delete():
         return render_template('delete_account.html')
     return render_template('index.html')
 
+
 @app.route('/logout')
 def logout():
     if session.get("loggedin"):
