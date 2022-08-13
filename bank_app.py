@@ -1,6 +1,4 @@
 from flask import Flask, request, render_template, redirect, url_for, session
-# from requests import cookies
-from http import cookies
 from bank_db_utils import Account, Transactions, Bank
 from datetime import datetime
 import requests
@@ -248,8 +246,9 @@ def delete_account():
 
 @app.route('/delete')
 def delete():
-    return render_template('delete_account.html')
-
+    if session.get("loggedin"):
+        return render_template('delete_account.html')
+    return render_template('index.html')
 
 @app.route('/logout')
 def logout():
