@@ -51,12 +51,12 @@ def test_request_customer_details():
 
 def test_request_transactions():
     response = session.get(f'{url}/transactions')
-    assert response.status_code == 500
+    assert response.status_code == 200
 
 
 def test_request_withdrawal():
     response = session.get(f'{url}/withdrawal')
-    assert response.status_code == 500
+    assert response.status_code == 200
 
 
 def test_request_select_transactions():
@@ -83,7 +83,7 @@ def test_request_currency_exchange():
 
 def test_request_deposit():
     response = session.post(f'{url}/deposit')
-    assert response.status_code == 500
+    assert response.status_code == 200
 
 
 def test_request_delete_account():

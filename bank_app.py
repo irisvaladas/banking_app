@@ -1,4 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, session
+# from requests import cookies
+from http import cookies
 from bank_db_utils import Account, Transactions, Bank
 from datetime import datetime
 import requests
@@ -74,13 +76,14 @@ def registration():
 
 @app.route('/update')
 def update():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         return render_template("update.html")
+    return render_template('index.html')
 
 
 @app.route('/update_details', methods = ['GET','POST'])
 def update_details():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         fname = request.form["account_first_name"]
         lname = request.form["account_last_names"]
         address = request.form["account_holder_address"]
@@ -112,7 +115,7 @@ def update_details():
 
 @app.route('/options')
 def options():
-    if "loggedin" in session:
+    if session.get("loggedin"):
         username = Account().db_get_customer_info(session['account_id'][0]['account_id'])
         account_balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
         currencies = requests.get("http://api.frankfurter.app/currencies").json()
@@ -123,7 +126,7 @@ def options():
 
 @app.route('/customer_details')
 def details():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         res = Account().db_get_customer_info(session['account_id'][0]['account_id'])
         return render_template("display.html", account=res)
     return render_template('index.html')
@@ -131,36 +134,37 @@ def details():
 
 @app.route('/transactions', methods=['GET','POST'])
 def transactions():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         return render_template('transactions.html')
+    return render_template('index.html')
 
 
 @app.route('/select_transactions', methods=['GET','POST'])
 def select_transactions():
-    if 'loggedin' in session:
-        if request.method == 'POST':
-            date_from = request.form['date_from']
-            date_to = request.form['date_to']
-            res = Transactions().db_get_customer_transactions((session['account_id'][0]['account_id'], date_from, date_to))
-            total_spent=f"You didn't spend money in this period of time"
-            if [d['transaction_amount'] for d in res if d['transaction_type'] == 'Withdrawal'] == []:
-                total_spent = f"You didn't spend money in this period of time"
-            elif res:
-                total_spent = f"Within this period you spent: {Bank().get_total_spent(res)[-1]} GBP"
-            return render_template('transactions.html', account=res, total_spent=total_spent)
+    if session.get("loggedin"):
+        date_from = request.form['date_from']
+        date_to = request.form['date_to']
+        res = Transactions().db_get_customer_transactions((session['account_id'][0]['account_id'], date_from, date_to))
+        total_spent=f"You didn't spend money in this period of time"
+        if [d['transaction_amount'] for d in res if d['transaction_type'] == 'Withdrawal'] == []:
+            total_spent = f"You didn't spend money in this period of time"
+        elif res:
+            total_spent = f"Within this period you spent: {Bank().get_total_spent(res)[-1]} GBP"
+        return render_template('transactions.html', account=res, total_spent=total_spent)
     return render_template('index.html')
 
 
 @app.route('/withdrawal', methods=['GET','POST'])
 def withdrawal():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
         return render_template('withdraw.html', balance=balance)
+    return render_template('index.html')
 
 
 @app.route('/make_withdrawal', methods=['GET','POST'])
 def make_withdrawal():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         amount = int(request.form['withdraw'])
         msg = ""
         balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
@@ -187,14 +191,15 @@ def make_withdrawal():
 
 @app.route('/deposit', methods=['GET','POST'])
 def deposit():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
         return render_template('deposit.html', balance=balance)
+    return render_template('index.html')
 
 
 @app.route('/make_deposit', methods=['GET','POST'])
 def make_deposit():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         amount = int(request.form['deposit'])
         def check_amount(num):
             if num <= 0:
@@ -213,7 +218,7 @@ def make_deposit():
 
 @app.route('/currency_exchange', methods=['GET','POST'])
 def currency_exchange():
-    if 'loggedin' in session:
+    if session.get("loggedin"):
         currency=request.form["currency"]
         username = Account().db_get_customer_info(session['account_id'][0]['account_id'])
         account_balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
@@ -225,7 +230,7 @@ def currency_exchange():
 
 @app.route('/delete_account', methods=['GET','POST'])
 def delete_account():
-    if "loggedin" in session:
+    if session.get("loggedin"):
         account_id = request.form['account_id']
         password = request.form['password']
         record = Account().db_customer_login((account_id, password))
@@ -238,7 +243,7 @@ def delete_account():
         else:
             msg = 'Incorrect account number/ password. Try again!'
         return render_template('delete_account.html', msg=msg)
-    return render_template('delete_account.html')
+    return render_template('index.html')
 
 
 @app.route('/delete')
@@ -248,10 +253,11 @@ def delete():
 
 @app.route('/logout')
 def logout():
-    session.pop('loggedin',None)
-    session.pop('username',None)
-    return redirect(url_for('index'))
-
+    if session.get("loggedin"):
+        session.pop('loggedin',None)
+        session.pop('username',None)
+        return redirect(url_for('index'))
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
