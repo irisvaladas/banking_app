@@ -53,7 +53,7 @@ class Account(Database):
                         """
         try:
             cur.execute(query,data)
-            result = cur.fetchall()  # this is a list with db records where each record is a tuple
+            result = cur.fetchall()
             return result
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
@@ -75,7 +75,7 @@ class Account(Database):
         query = """INSERT INTO customer_details 
         VALUES(null,%s,%s,%s,%s,%s,%s,%s);"""
         try:
-            cur.execute(query, data)  # this is a list with db records where each record is a tuple
+            cur.execute(query, data)
             cnx.commit()
         except Exception:
             raise DbConnectionError("Failed to read data from DB")
@@ -121,10 +121,26 @@ class Account(Database):
             raise DbConnectionError("Failed to read data from DB")
 
     def delete_account(self, data):
-        query = """Delete from Customer_details where account_id = %s and password = %s
+        query = """Delete from Customer_details where account_id = %s and password = %s;
         """
         try:
             cur.execute(query, data)
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
+    def delete_transactions(self, id):
+        query = f"Delete from trandetails where account_id = {id};"
+        try:
+            cur.execute(query)
+            cnx.commit()
+        except Exception:
+            raise DbConnectionError("Failed to read data from DB")
+
+    def delete_bank_account(self, id):
+        query = f"Delete from accounts where account_id = {id};"
+        try:
+            cur.execute(query)
             cnx.commit()
         except Exception:
             raise DbConnectionError("Failed to read data from DB")

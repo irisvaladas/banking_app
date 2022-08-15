@@ -92,3 +92,13 @@ INSERT INTO trandetails VALUES(null,20011,'2013-03-25','Withdrawal',7000);
 INSERT INTO trandetails VALUES(null,20012,'2013-03-26','Withdrawal',2000);
 
 CREATE TRIGGER create_account AFTER INSERT ON customer_details FOR EACH ROW INSERT INTO accounts Values((select max(account_id) from customer_details), null, null, 1);
+
+CREATE TRIGGER delete_account
+	after delete on trandetails
+	for each row
+	delete from accounts a where a.account_id = OLD.account_id;
+
+CREATE TRIGGER delete_transactions
+	after delete on customer_details
+	for each row
+	delete from trandetails t where t.account_id = OLD.account_id;
