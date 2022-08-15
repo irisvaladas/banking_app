@@ -99,3 +99,4 @@ def test_request_delete():
 def test_request_logout():
     response = requests.get(f'{url}logout')
     assert response.status_code == 200
+

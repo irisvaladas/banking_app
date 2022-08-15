@@ -233,9 +233,11 @@ def delete_account():
         password = request.form['password']
         record = Account().db_customer_login((account_id, password))
         if record:
-            Account().delete_account((account_id, password))
             balance = Account().show_balance(session['account_id'][0]['account_id'])['account_balance']
             code = Transactions().withdraw((session['account_id'][0]['account_id'], balance, session['account_id'][0]['account_id']))
+            Account().delete_account((account_id, password))
+            Account().delete_transactions((account_id))
+            Account().delete_bank_account((account_id))
             msg = f"We are very sorry to see you leaving. To get your money back please insert this code: {code} into the ATM"
             return render_template('index.html', msg=msg)
         else:
@@ -249,6 +251,7 @@ def delete():
     if session.get("loggedin"):
         return render_template('delete_account.html')
     return render_template('index.html')
+
 
 @app.route('/logout')
 def logout():
